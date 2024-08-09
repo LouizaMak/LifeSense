@@ -11,35 +11,59 @@ import datetime
 from app import app
 from models import db, Sensor, DataPoint, Status, User
 
+# Manufacturer and model information
+manu_model_list = [
+    {'Dexcom': ['G7', 'G6 Personal', 'G6 Pro']}, 
+    {'Medtronic': ['Guardian Sensor 3']}, 
+    {'Abbott': ['FreeStyle Libre 2', 'FreeStyle Libre 3']}, 
+    {'Eversense': ['E3']}, 
+    {'Roche': ['Accu-Chek SmartGuide']}
+    ]
+
+# Base Users
+users_dict = [
+    {'first_name': 'Jeanette',
+     'last_name': 'Burr',
+     'manufacturer': 'Dexcom',
+     'model': 'G6 Pro',
+    },
+    {'first_name': 'Tracy',
+     'last_name': 'Axel',
+     'manufacturer': 'Abbott',
+     'model': 'FreeStyle Libre 3',
+    },
+    {'first_name': 'Chance',
+     'last_name': 'Nickels',
+     'manufacturer': 'Medtronic',
+     'model': 'Guardian Sensor 3',
+    },
+    {'first_name': 'Justin',
+     'last_name': 'Bacon',
+     'manufacturer': 'Eversense',
+     'model': 'E3',
+    },
+    {'first_name': 'Patrick',
+     'last_name': 'Charles',
+     'manufacturer': 'Dexcom',
+     'model': 'G7',
+    }
+]
+
 # Seeding for sensors
 def create_sensors():
     sensors = []
     for _ in range(20):
-        manu_model = generate_manu_model(randint(0,4))
+        num = randint(0,4)
         date_list = generate_app_rem_dates()
         s = Sensor(
-            manufacturer = manu_model[0],
-            model = manu_model[1],
+            manufacturer = users_dict[num]['manufacturer'],
+            model = users_dict[num]['model'],
             application_date = date_list[0],
             removal_date = date_list[1],
-            user_id = randint(0,5)
+            user_id = num
         )
         sensors.append(s)
     return sensors
-
-def generate_manu_model(num):
-    manu_model_list = [
-        {'Dexcom': ['G7', 'G6 Personal', 'G6 Pro']}, 
-        {'Medtronic': 'Guardian Sensor 3'}, 
-        {'Abbott': ['FreeStyle Libre 2', 'FreeStyle Libre 3']}, 
-        {'Eversense': 'E3'}, 
-        {'Roche': 'Accu-Chek SmartGuide'}
-        ]
-    manu_model = manu_model_list[num]
-    manu = list(manu_model.keys())[0]
-    model_length = len(manu_model[manu]) - 1
-    model = manu_model[manu][randint(0, model_length)]
-    return [manu, model]
 
 def generate_app_rem_dates():
     app = fake.date_between(start_date='-2y', end_date='now')
