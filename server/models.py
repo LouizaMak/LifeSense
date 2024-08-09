@@ -12,8 +12,8 @@ class Sensor(db.Model, SerializerMixin):
     removal_date = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    user = db.relationship('User', back_populates='users', cascade='all, delete-orphan')
-    data_points = db.relationship('DataPoints', back_populates='datapoints', cascade='all, delete-orphan')
+    user = db.relationship('User', back_populates='sensors')
+    datapoints = db.relationship('DataPoint', back_populates='sensor', cascade='all, delete-orphan')
 
     serialize_rules = ('-user.sensors', '-datapoints.sensor')
 
@@ -26,8 +26,8 @@ class DataPoint(db.Model, SerializerMixin):
     sensor_id = db.Column(db.Integer, db.ForeignKey('sensors.id'))
     status_id = db.Column(db.Integer, db.ForeignKey('statuses.id'))
 
-    sensor = db.relationship('Sensor', back_populates='sensors', cascade='all, delete-orphan')
-    status = db.relationship('Status', back_populates='statuses', cascade='all, delete-orphan')
+    sensor = db.relationship('Sensor', back_populates='datapoints')
+    status = db.relationship('Status', back_populates='datapoints')
 
     serialize_rules = ('-sensor.datapoints', '-status.datapoints')
 
@@ -39,7 +39,7 @@ class Status(db.Model, SerializerMixin):
     min = db.Column(db.Integer)
     max = db.Column(db.Integer)
 
-    data_points = db.relationship('DataPoints', back_populates='datapoints', cascade='all, delete-orphan')
+    datapoints = db.relationship('DataPoint', back_populates='status', cascade='all, delete-orphan')
 
     serialize_rules = ('-datapoints.status', )
 
@@ -55,6 +55,6 @@ class User(db.Model, SerializerMixin):
     age = db.Column(db.Integer)
     gender = db.Column(db.String)
 
-    sensors = db.relationship('Sensor', back_populates='sensors', cascade='all, delete-orphan')
+    sensors = db.relationship('Sensor', back_populates='user', cascade='all, delete-orphan')
 
     serialize_rules = ('-sensors.user', )
