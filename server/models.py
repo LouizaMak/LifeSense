@@ -50,6 +50,8 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String)
     password_hash = db.Column(db.String)
     date_joined = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
     age = db.Column(db.Integer)
     gender = db.Column(db.String)
 

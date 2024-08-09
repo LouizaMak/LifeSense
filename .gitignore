@@ -6,3 +6,6 @@
 instance
 .vscode
 package-lock.json
+
+#faker
+node_modules
