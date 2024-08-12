@@ -101,6 +101,17 @@ def create_users():
 # Seeding for datapoints
 def create_datapoints():
     datapoints = []
+    for sensor in Sensor.query.all():
+        date = sensor.application_date
+        for _ in range(14):
+            d = DataPoint(
+                date_time = date,
+                bgl = randint(90, 110),
+                sensor_id = sensor.id,
+                status_id = randint(0,3),
+            )
+            date = date + datetime.timedelta(days=1)
+            datapoints.append(d)
     return datapoints
 
 # Seeding for statuses
