@@ -28,35 +28,35 @@ users_dict = [
      'manufacturer': 'Dexcom',
      'model': 'G6 Pro',
      'gender': 'F',
-     'date_joined': '10-02-2016'
+     'date_joined': datetime.date(2016, 10, 2)
     },
     {'first_name': 'Tracy',
      'last_name': 'Axel',
      'manufacturer': 'Abbott',
      'model': 'FreeStyle Libre 3',
      'gender': 'F',
-     'date_joined': '03-17-2016'
+     'date_joined': datetime.date(2016, 3, 17)
     },
     {'first_name': 'Chance',
      'last_name': 'Nickels',
      'manufacturer': 'Medtronic',
      'model': 'Guardian Sensor 3',
      'gender': 'M',
-     'date_joined': '01-01-2015'
+     'date_joined': datetime.date(2015, 1, 1)
     },
     {'first_name': 'Justin',
      'last_name': 'Bacon',
      'manufacturer': 'Eversense',
      'model': 'E3',
      'gender': 'M',
-     'date_joined': '4-19-2017'
+     'date_joined': datetime.date(2017, 4, 19)
     },
     {'first_name': 'Patrick',
      'last_name': 'Charles',
      'manufacturer': 'Dexcom',
      'model': 'G7',
      'gender': 'M',
-     'date_joined': '06-30-2016'
+     'date_joined': datetime.date(2016, 6, 30)
     }
 ]
 

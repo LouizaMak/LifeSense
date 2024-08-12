@@ -8,8 +8,8 @@ class Sensor(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     manufacturer = db.Column(db.String)
     model = db.Column(db.String)
-    application_date = db.Column(db.String)
-    removal_date = db.Column(db.String)
+    application_date = db.Column(db.DateTime)
+    removal_date = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     user = db.relationship('User', back_populates='sensors')
@@ -21,7 +21,7 @@ class DataPoint(db.Model, SerializerMixin):
     __tablename__ = 'datapoints'
 
     id = db.Column(db.Integer, primary_key = True)
-    date_time = db.Column(db.String)
+    date_time = db.Column(db.DateTime)
     bgl = db.Column(db.Integer)
     sensor_id = db.Column(db.Integer, db.ForeignKey('sensors.id'))
     status_id = db.Column(db.Integer, db.ForeignKey('statuses.id'))
@@ -49,7 +49,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String)
     _password_hash = db.Column(db.String)
-    date_joined = db.Column(db.String)
+    date_joined = db.Column(db.DateTime)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
     age = db.Column(db.Integer)
