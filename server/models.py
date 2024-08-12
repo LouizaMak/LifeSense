@@ -48,7 +48,7 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String)
-    password_hash = db.Column(db.String)
+    _password_hash = db.Column(db.String)
     date_joined = db.Column(db.String)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)

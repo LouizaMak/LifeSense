@@ -5,6 +5,7 @@ from random import randint, choice
 
 # Remote library imports
 from faker import Faker
+from flask_bcrypt import Bcrypt
 import datetime
 
 # Local imports
@@ -26,26 +27,36 @@ users_dict = [
      'last_name': 'Burr',
      'manufacturer': 'Dexcom',
      'model': 'G6 Pro',
+     'gender': 'F',
+     'date_joined': '10-02-2016'
     },
     {'first_name': 'Tracy',
      'last_name': 'Axel',
      'manufacturer': 'Abbott',
      'model': 'FreeStyle Libre 3',
+     'gender': 'F',
+     'date_joined': '03-17-2016'
     },
     {'first_name': 'Chance',
      'last_name': 'Nickels',
      'manufacturer': 'Medtronic',
      'model': 'Guardian Sensor 3',
+     'gender': 'M',
+     'date_joined': '01-01-2015'
     },
     {'first_name': 'Justin',
      'last_name': 'Bacon',
      'manufacturer': 'Eversense',
      'model': 'E3',
+     'gender': 'M',
+     'date_joined': '4-19-2017'
     },
     {'first_name': 'Patrick',
      'last_name': 'Charles',
      'manufacturer': 'Dexcom',
      'model': 'G7',
+     'gender': 'M',
+     'date_joined': '06-30-2016'
     }
 ]
 
@@ -66,13 +77,25 @@ def create_sensors():
     return sensors
 
 def generate_app_rem_dates():
-    app = fake.date_between(start_date='-2y', end_date='now')
+    app = fake.date_between(start_date='-5y', end_date='now')
     rem = app + datetime.timedelta(days=14)
     return [app, rem]
 
 # Seeding for users
 def create_users():
     users = []
+    for user in users_dict:
+        password = fake.word() + str(randint(0,99)) + fake.word()
+        u = User(
+            username = fake.word() + fake.word() + str(randint(0,99)),
+            _password_hash = bcrypt.generate_password_hash(password),
+            date_joined = user['date_joined'],
+            first_name = user['first_name'],
+            last_name = user['last_name'],
+            age = randint(21, 99),
+            gender = user['gender'],
+        )
+        users.append(u)
     return users
 
 # Seeding for datapoints
@@ -87,6 +110,7 @@ def create_statuses():
 
 if __name__ == '__main__':
     fake = Faker()
+    bcrypt = Bcrypt()
     with app.app_context():
         print("Starting seed...")
         print("Clearing db...")
