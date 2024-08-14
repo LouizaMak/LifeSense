@@ -22,41 +22,41 @@ manu_model_list = [
     ]
 
 # Base Users
-users_dict = [
+users_list = [
     {'first_name': 'Jeanette',
      'last_name': 'Burr',
      'manufacturer': 'Dexcom',
      'model': 'G6 Pro',
      'gender': 'F',
-     'date_joined': datetime.date(2016, 10, 2)
+     'date_joined': datetime.date(2016, 10, 2),
     },
     {'first_name': 'Tracy',
      'last_name': 'Axel',
      'manufacturer': 'Abbott',
      'model': 'FreeStyle Libre 3',
      'gender': 'F',
-     'date_joined': datetime.date(2016, 3, 17)
+     'date_joined': datetime.date(2016, 3, 17),
     },
     {'first_name': 'Chance',
      'last_name': 'Nickels',
      'manufacturer': 'Medtronic',
      'model': 'Guardian Sensor 3',
      'gender': 'M',
-     'date_joined': datetime.date(2015, 1, 1)
+     'date_joined': datetime.date(2015, 1, 1),
     },
     {'first_name': 'Justin',
      'last_name': 'Bacon',
      'manufacturer': 'Eversense',
      'model': 'E3',
      'gender': 'M',
-     'date_joined': datetime.date(2017, 4, 19)
+     'date_joined': datetime.date(2017, 4, 19),
     },
     {'first_name': 'Patrick',
      'last_name': 'Charles',
      'manufacturer': 'Dexcom',
      'model': 'G7',
      'gender': 'M',
-     'date_joined': datetime.date(2016, 6, 30)
+     'date_joined': datetime.date(2016, 6, 30),
     }
 ]
 
@@ -67,8 +67,8 @@ def create_sensors():
         num = randint(0,4)
         date_list = generate_app_rem_dates()
         s = Sensor(
-            manufacturer = users_dict[num]['manufacturer'],
-            model = users_dict[num]['model'],
+            manufacturer = users_list[num]['manufacturer'],
+            model = users_list[num]['model'],
             application_date = date_list[0],
             removal_date = date_list[1],
             user_id = num
@@ -84,7 +84,7 @@ def generate_app_rem_dates():
 # Seeding for users
 def create_users():
     users = []
-    for user in users_dict:
+    for user in users_list:
         password = fake.word() + str(randint(0,99)) + fake.word()
         u = User(
             username = fake.word() + fake.word() + str(randint(0,99)),
@@ -98,26 +98,62 @@ def create_users():
         users.append(u)
     return users
 
+# Seeding for statuses
+def create_statuses():
+    statuses = []
+    status_list = [
+        {'severity': 'Low',
+         'min': 30,
+         'max': 49
+        },
+        {'severity': 'Excellent',
+         'min': 50,
+         'max': 115
+        },
+        {'severity': 'Good',
+         'min': 116,
+         'max': 180
+        },
+        {'severity': 'Elevated',
+         'min': 181,
+         'max': 214
+        },
+        {'severity': 'Action Suggested',
+         'min': 215,
+         'max': 380
+        }
+    ]
+    for status in status_list:
+        s = Status(
+            severity = status['severity'],
+            min = status['min'],
+            max = status['max']
+        )
+        statuses.append(s)
+    return statuses
+
 # Seeding for datapoints
 def create_datapoints():
     datapoints = []
     for sensor in Sensor.query.all():
         date = sensor.application_date
         for _ in range(14):
+            bgl_num = randint(35, 214)
             d = DataPoint(
                 date_time = date,
-                bgl = randint(90, 110),
+                bgl = bgl_num,
                 sensor_id = sensor.id,
-                status_id = randint(0,3),
+                status_id = assign_status_id(bgl_num)
             )
             date = date + datetime.timedelta(days=1)
             datapoints.append(d)
     return datapoints
 
-# Seeding for statuses
-def create_statuses():
-    statuses = []
-    return statuses
+def assign_status_id(bgl):
+    for status in Status.query.all():
+        if status.min <= bgl <= status.max:
+            return status.id
+    return None
 
 if __name__ == '__main__':
     fake = Faker()
@@ -135,11 +171,6 @@ if __name__ == '__main__':
         db.session.add_all(sensors)
         db.session.commit()
 
-        print("Seeding datapoints...")
-        datapoints = create_datapoints()
-        db.session.add_all(datapoints)
-        db.session.commit()
-
         print("Seeding statuses...")
         statuses = create_statuses()
         db.session.add_all(statuses)
@@ -148,6 +179,11 @@ if __name__ == '__main__':
         print("Seeding users...")
         users = create_users()
         db.session.add_all(users)
+        db.session.commit()
+
+        print("Seeding datapoints...")
+        datapoints = create_datapoints()
+        db.session.add_all(datapoints)
         db.session.commit()
 
         print("Done seeding!")
