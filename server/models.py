@@ -1,6 +1,7 @@
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 
-from config import db
+from config import db, bcrypt
 
 class Sensor(db.Model, SerializerMixin):
     __tablename__ = 'sensors'
@@ -58,3 +59,17 @@ class User(db.Model, SerializerMixin):
     sensors = db.relationship('Sensor', back_populates='user', cascade='all, delete-orphan')
 
     serialize_rules = ('-sensors.user', )
+
+    @hybrid_property
+    def password_hash(self):
+        raise Exception('Password hashes may not be viewed.')
+
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(
+            password.encode('utf-8'))
+        self._password_hash = password_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode('utf-8'))
