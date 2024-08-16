@@ -1,11 +1,17 @@
+import React from 'react';
+import { useRoutes } from 'react-router-dom';
+import { AppProvider } from './AppContext';
+import routes from './routes';
+import NavBar from './NavBar';
+
 function App() {
+    const routing = useRoutes(routes);
 
     return (
-        <>
-            <header>
-                <p2>Test</p2>
-            </header>
-        </>
+        <AppProvider>
+            <NavBar />
+            {routing}
+        </AppProvider>
     )
 }
 
