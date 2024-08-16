@@ -1,12 +1,15 @@
 import React, { createContext } from 'react';
 
-export const AppContext = createContext();
+const AppContext = createContext();
 
-export const AppProvider = ({ children }) => {
+function AppProvider({ children }) {
+    const contextValue = {};
 
     return (
-        <AppContext.Provider>
+        <AppContext.Provider value={contextValue}>
             {children}
         </AppContext.Provider>
     );
 };
+
+export { AppContext, AppProvider };
