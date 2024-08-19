@@ -1,15 +1,16 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { AppProvider } from './AppContext';
+import React, { useContext} from 'react';
+import { Outlet, Navigate } from 'react-router-dom';
+import { AppContext } from './AppContext';
 import NavBar from './NavBar';
 
 function App() {
+    const { currentUser } = useContext(AppContext)
 
     return (
-        <AppProvider>
-            <NavBar />
-            <Outlet />
-        </AppProvider>
+      <>
+        <NavBar />
+        {currentUser ? <Outlet /> : <Navigate to="/login"/>}
+      </>
     )
 }
 
