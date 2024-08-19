@@ -10,11 +10,16 @@ function Signup() {
     const { values, handleChange, handleSubmit } = useFormik({
         initialValues: {
             username: "",
-            password: ""
+            password: "",
+            first_name: "",
+            last_name: "",
+            gender: "",
+            age: "",
+            date_joined: new Date(Date.now())
         },
         validationSchema: loginSchema,
         onSubmit: (values) => {
-            fetch("http://127.0.0.1:5555/login", {
+            fetch("http://127.0.0.1:5555/signup", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -23,7 +28,7 @@ function Signup() {
             })
             .then(res => {
                 if (res.ok) {
-                    res.json().then(user => setCurrentUser(user))
+                    res.json().then(user => {setCurrentUser(user)})
                 }
             })
         }
@@ -39,22 +44,22 @@ function Signup() {
 
                 <input type="text" placeholder ="Password" name="password" value={values.password} onChange={handleChange} required/>
 
-                <input type="text" placeholder ="First Name" name="firstName" value={values.first_name} onChange={handleChange} required/>
+                <input type="text" placeholder ="First Name" name="first_name" value={values.first_name} onChange={handleChange} required/>
 
-                <input type="text" placeholder ="Last Name" name="lastName" value={values.last_name} onChange={handleChange} required/>
+                <input type="text" placeholder ="Last Name" name="last_name" value={values.last_name} onChange={handleChange} required/>
 
-                <input type="radio" name="female" value={values.gender} onChange={handleChange} required/>
-                <label for="female">Female</label>
+                <input type="radio" id="f" name="gender" value="F" onChange={handleChange} checked={values.gender === 'F'} required/>
+                <label for="f">Female</label>
 
-                <input type="radio" name="male" value={values.gender} onChange={handleChange} required/>
-                <label for="male">Male</label>
+                <input type="radio" id="m" name="gender" value="M" onChange={handleChange} checked={values.gender === 'M'} required/>
+                <label for="m">Male</label>
 
-                <input type="radio" name="pnta" value={values.gender} onChange={handleChange} required/>
+                <input type="radio" id="pnta" name="gender" value="PNTA" onChange={handleChange} required/>
                 <label for="pnta">Prefer Not To Answer</label>
 
                 <input type="number" placeholder ="Age" name="age" value={values.age} onChange={handleChange} required/>
 
-                <button type="submit">Login</button>
+                <button type="submit">Signup</button>
             </form>
         </>
     )

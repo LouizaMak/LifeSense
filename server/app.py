@@ -7,8 +7,9 @@ from flask import request, session
 from flask_restful import Resource
 
 # Local imports
-from config import app, db, api
+from config import app, db, api, bcrypt
 from models import Sensor, DataPoint, Status, User
+from datetime import datetime
 
 # User Views
 class CheckSession(Resource):
@@ -22,11 +23,16 @@ class CheckSession(Resource):
 
 class Signup(Resource):
     def post(self):
-        json = request.get_json()
+        data = request.get_json()
         user = User(
-            username=json['username']
+            username=data['username'],
+            first_name = data['first_name'],
+            last_name = data['last_name'],
+            age = data['age'],
+            gender = data['gender'],
+            date_joined = datetime.fromisoformat(data['date_joined'].replace("Z", "+00:00")).date()
         )
-        user.password_hash = json['password']
+        user.password_hash = data['password']
         db.session.add(user)
         db.session.commit()
         return user.to_dict(), 201
