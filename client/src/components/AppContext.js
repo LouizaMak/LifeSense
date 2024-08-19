@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 const AppContext = createContext();
 
 function AppProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(true)
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/check_session")
