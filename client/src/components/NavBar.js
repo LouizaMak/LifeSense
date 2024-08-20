@@ -23,7 +23,10 @@ function NavBar() {
             </div>
             <div>
                 {currentUser ? (
-                <button onClick={handleLogoutClick}>Logout</button>
+                <>
+                    <Link to="/profile">Profile</Link>
+                    <button onClick={handleLogoutClick}>Logout</button>
+                </>
                 ) : (
                 <>
                     <Link to="/signup">Signup</Link>
