@@ -51,11 +51,15 @@ class Logout(Resource):
         session["user_id"] = None
 
 class Profile(Resource):
-    def get(self, id):
-        user = User.query.get(id)
-        if user:
-            return user.to_dict(), 200
-        return {"message": "User not found"}, 404
+    def patch(self):
+        data = request.get_json()
+        user = User.query.filter(User.username == data['username']).first()
+        for attr in data:
+            setattr(user, attr, data[attr])
+        db.session.add(user)
+        db.session.commit()
+        return user.to_dict(), 200
+    
     
 # Sensor Views
 class SensorIndex(Resource):
@@ -135,7 +139,7 @@ api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Logout, '/logout', endpoint='logout')
-api.add_resource(Profile, '/profile/<name>', endpoint='profile')
+api.add_resource(Profile, '/profile', endpoint='profile')
 api.add_resource(SensorIndex, '/sensors', endpoint='sensors')
 api.add_resource(SensorDetails, '/sensors/<id>', endpoint='sensor_details')
 api.add_resource(StatusIndex, '/statuses', endpoint='statuses')
