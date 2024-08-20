@@ -3,9 +3,11 @@ import { useFormik } from "formik";
 import { loginSchema } from "../schemas/schemas";
 import { AppContext } from "./AppContext";
 import NavBar from "./NavBar";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
     const { setCurrentUser } = useContext(AppContext)
+    const navigate = useNavigate();
 
     const { values, handleChange, handleSubmit } = useFormik({
         initialValues: {
@@ -28,7 +30,11 @@ function Signup() {
             })
             .then(res => {
                 if (res.ok) {
-                    res.json().then(user => {setCurrentUser(user)})
+                    res.json()
+                    .then(user => {
+                        setCurrentUser(user);
+                        navigate(`/profile`)
+                    })
                 }
             })
         }
