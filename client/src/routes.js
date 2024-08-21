@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 import Signup from './components/Signup';
 import Sensors from './components/Sensors';
+import Statuses from './components/Statuses';
 
 const routes = [
     {
@@ -17,6 +18,10 @@ const routes = [
             {
                 path: "/sensors",
                 element: <Sensors />
+            },
+            {
+                path: "/statuses",
+                element: <Statuses />
             }
         ]
     },

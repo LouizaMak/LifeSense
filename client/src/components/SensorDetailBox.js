@@ -6,7 +6,7 @@ function SensorDetailBox({ sensor }) {
     return(
         <div>
             <p>{sensor.application_date.slice(0,10)} - {sensor.removal_date.slice(0,10)}</p>
-            {dataPreviewArray.map(data => <DataRow data={data} />)}
+            {dataPreviewArray.map(data => <DataRow key={data.id} data={data} />)}
             <button>Details</button>
         </div>
     )

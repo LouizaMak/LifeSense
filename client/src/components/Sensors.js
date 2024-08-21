@@ -16,7 +16,7 @@ function Sensors() {
             <h1>{displaySensors[0].manufacturer} {displaySensors[0].model} Sensors</h1> 
             : <p>Loading</p>}
             <div className="sensor-boxes">
-                {displaySensors.map(sensor => <SensorDetailBox sensor={sensor} />)} 
+                {displaySensors.map(sensor => <SensorDetailBox key={sensor.id} sensor={sensor} />)} 
             </div>
         </>
     )

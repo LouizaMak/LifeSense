@@ -25,7 +25,8 @@ function NavBar() {
                 {currentUser ? (
                 <>
                     <Link to="/profile">Profile</Link>
-                    <Link to="sensors">Sensors</Link>
+                    <Link to="/sensors">Sensors</Link>
+                    <Link to="/statuses">Statuses</Link>
                     <button onClick={handleLogoutClick}>Logout</button>
                 </>
                 ) : (
