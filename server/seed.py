@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Standard library imports
-from random import randint, choice
+from random import randint
 
 # Remote library imports
 from faker import Faker
@@ -94,6 +94,7 @@ def create_users():
             last_name = user['last_name'],
             age = randint(21, 99),
             gender = user['gender'],
+            email = fake.email()
         )
         users.append(u)
     return users

@@ -9,7 +9,7 @@ function Login() {
     const { setCurrentUser } = useContext(AppContext)
     const navigate = useNavigate();
 
-    const { values, handleChange, handleSubmit } = useFormik({
+    const { values, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
             username: "",
             password: ""
@@ -41,9 +41,11 @@ function Login() {
             <form onSubmit={handleSubmit}>
                 <h2>Member Login</h2>
 
-                <input type="text" placeholder ="Username" name="username" value={values.username} onChange={handleChange} required/>
+                <input type="text" placeholder="Username" name="username" value={values.username} onChange={handleChange} className={errors.username && touched.username ? 'input-error' : null} required/>
+                {errors.username && touched.username && (<span className="error">{errors.username}</span>)}
 
-                <input type="text" placeholder ="Password" name="password" value={values.password} onChange={handleChange} required/>
+                <input type="text" placeholder="Password" name="password" value={values.password} onChange={handleChange} className={errors.password && touched.password ? 'input-error' : null} required/>
+                {errors.password && touched.password && (<span className="error">{errors.password}</span>)}
 
                 <button type="submit">Login</button>
             </form>

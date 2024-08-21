@@ -1,12 +1,12 @@
 import { useContext } from "react"
 import { AppContext } from "./AppContext"
 import { useFormik } from "formik"
-import { loginSchema } from "../schemas/schemas"
+import { editProfileSchema } from "../schemas/schemas"
 
 function ProfileForm({ onToggleForm }) {
     const { currentUser, setCurrentUser } = useContext(AppContext)
 
-    const { values, handleChange, handleSubmit } = useFormik({
+    const { values, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
             username: currentUser.username,
             first_name: currentUser.first_name,
@@ -14,7 +14,7 @@ function ProfileForm({ onToggleForm }) {
             gender: currentUser.gender,
             age: currentUser.age,
         },
-        // validationSchema: loginSchema,
+        validationSchema: editProfileSchema,
         onSubmit: (values) => {
             fetch(`http://127.0.0.1:5555/profile`, {
                 method: "PATCH",
@@ -33,9 +33,11 @@ function ProfileForm({ onToggleForm }) {
         <div className="form-popup" id="profileForm">
             <h2>Edit Profile</h2>
             <form className="form-container" onSubmit={handleSubmit}>
-                <input type="text" placeholder ="First Name" name="first_name" value={values.first_name} onChange={handleChange} required/>
+                <input type="text" placeholder="First Name" name="first_name" value={values.first_name} onChange={handleChange} className={errors.first_name && touched.first_name ? 'input-error' : null} required/>
+                {errors.first_name && touched.first_name && (<span className="error">{errors.first_name}</span>)}
 
-                <input type="text" placeholder ="Last Name" name="last_name" value={values.last_name} onChange={handleChange} required/>
+                <input type="text" placeholder="Last Name" name="last_name" value={values.last_name} onChange={handleChange} className={errors.last_name && touched.last_name_name ? 'input-error' : null} required/>
+                {errors.last_name && touched.last_name && (<span className="error">{errors.last_name}</span>)}
             
                 <input type="radio" id="f" name="gender" value="F" onChange={handleChange} checked={values.gender === 'F'} required/>
                 <label for="f">Female</label>
@@ -46,7 +48,8 @@ function ProfileForm({ onToggleForm }) {
                 <input type="radio" id="pnta" name="gender" value="PNTA" onChange={handleChange} required/>
                 <label for="pnta">Prefer Not To Answer</label>
 
-                <input type="number" placeholder ="Age" name="age" value={values.age} onChange={handleChange} required/>
+                <input type="number" placeholder="Age" name="age" value={values.age} onChange={handleChange} className={errors.age && touched.age ? 'input-error' : null} required/>
+                {errors.age && touched.age && (<span className="error">{errors.age}</span>)}
 
                 <button type="submit">Confirm</button>
                 <button type="button" onClick={onToggleForm}>Cancel</button>
