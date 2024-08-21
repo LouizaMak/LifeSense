@@ -3,6 +3,7 @@ import App from './components/App';
 import Login from './components/Login';
 import Profile from './components/Profile';
 import Signup from './components/Signup';
+import Sensors from './components/Sensors';
 
 const routes = [
     {
@@ -12,6 +13,10 @@ const routes = [
             {
                 path: "/profile",
                 element: <Profile />
+            },
+            {
+                path: "/sensors",
+                element: <Sensors />
             }
         ]
     },

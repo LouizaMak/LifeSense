@@ -63,7 +63,7 @@ users_list = [
 # Seeding for sensors
 def create_sensors():
     sensors = []
-    for _ in range(20):
+    for _ in range(15):
         num = randint(0,4)
         date_list = generate_app_rem_dates()
         s = Sensor(
@@ -71,7 +71,17 @@ def create_sensors():
             model = users_list[num]['model'],
             application_date = date_list[0],
             removal_date = date_list[1],
-            user_id = num
+            user_id = num + 1
+        )
+        sensors.append(s)
+    for _ in range (5):
+        date_list = generate_app_rem_dates()
+        s = Sensor(
+            manufacturer = "Dexcom",
+            model = "G6 Pro",
+            application_date = date_list[0],
+            removal_date = date_list[1],
+            user_id = 6
         )
         sensors.append(s)
     return sensors
