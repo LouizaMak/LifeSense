@@ -6,7 +6,7 @@ function NavBar() {
     const { currentUser, setCurrentUser } = useContext(AppContext)
 
     function handleLogoutClick() {
-        fetch("http://127.0.0.1:5555/logout", {
+        fetch("/logout", {
             method: "DELETE" 
         })
         .then(res => {
@@ -25,6 +25,7 @@ function NavBar() {
                 {currentUser ? (
                 <>
                     <Link to="/profile">Profile</Link>
+                    <Link to="sensors">Sensors</Link>
                     <button onClick={handleLogoutClick}>Logout</button>
                 </>
                 ) : (

@@ -7,7 +7,7 @@ function AppProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null)
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/check_session")
+    fetch("/check_session")
     .then(res => {
       if (res.status === 200) {
         res.json().then(user => setCurrentUser(user))

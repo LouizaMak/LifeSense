@@ -54,7 +54,7 @@ class Logout(Resource):
 class Profile(Resource):
     def patch(self):
         data = request.get_json()
-        user = User.query.filter(User.username == data['username']).first()
+        user = User.query.filter(User.id == session.get("user_id")).first()
         for attr in data:
             setattr(user, attr, data[attr])
         db.session.add(user)
@@ -65,7 +65,7 @@ class Profile(Resource):
 # Sensor Views
 class SensorIndex(Resource):
     def get(self):
-        sensors_dict = [sensor.to_dict() for sensor in Sensor.query.filter_by(Sensor.user_id == session.get("user_id")).all()]
+        sensors_dict = [sensor.to_dict() for sensor in Sensor.query.filter(Sensor.user_id == session.get("user_id")).all()]
         return sensors_dict, 200
     
     def post(self):

@@ -8,7 +8,6 @@ function ProfileForm({ onToggleForm }) {
 
     const { values, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
-            username: currentUser.username,
             first_name: currentUser.first_name,
             last_name: currentUser.last_name,
             gender: currentUser.gender,
@@ -16,7 +15,7 @@ function ProfileForm({ onToggleForm }) {
         },
         validationSchema: editProfileSchema,
         onSubmit: (values) => {
-            fetch(`http://127.0.0.1:5555/profile`, {
+            fetch(`/profile`, {
                 method: "PATCH",
                 headers: {
                     'Content-Type': 'application/json'
