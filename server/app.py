@@ -3,13 +3,17 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, session
+import json
+from flask import request, session, jsonify
 from flask_restful import Resource
+from openai import OpenAI
 
 # Local imports
 from config import app, db, api, bcrypt
 from models import Sensor, DataPoint, Status, User
 from datetime import datetime
+
+client = OpenAI()
 
 # User Views
 class CheckSession(Resource):
@@ -130,11 +134,24 @@ class StatusIndex(Resource):
         db.session.commit()
         return status_dict, 200
     
-# Datapoint Views
-class DataPoint(Resource):
-    def get(self):
-        datapoints_dict = [datapoint.to_dict() for datapoint in DataPoint.query.all()]
-        return datapoints_dict, 200
+class OpenAIAPI(Resource):
+    def post(self):
+        data = request.get_json()
+        bgl_data = data.get('bgl_data', [])
+        bgl_data_str = ', '.join(map(str, bgl_data))
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a diabetes data analyzer, skilled in explaining trends in blood glucose level and advising patients."},
+                {f"role": "system", "content": f"Please look at this data list of BGL where each number was taken every 24 hours in a 2 week period. [{bgl_data_str}]"},
+                {"role": "system", "content": "Return your response exactly in Python dictionary format with the following keys: 'recommendations' and 'lifestyle_changes'. Do not include any text outside of this format."},
+                {"role": "system", "content": "'Recommendation key should only return your observations and not stats like average_bgl, highest_bgl, etc."},
+                {"role": "system", "content": "Please make sure the values for the keys is in one string instead of an array of mutliple messages."},
+            ]
+        )
+        res_str = completion.choices[0].message.content
+        res_dict = json.loads(res_str)
+        return jsonify(res_dict)
     
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Signup, '/signup', endpoint='signup')
@@ -144,6 +161,7 @@ api.add_resource(Profile, '/profile', endpoint='profile')
 api.add_resource(SensorIndex, '/sensors', endpoint='sensors')
 api.add_resource(SensorDetails, '/sensors/<id>', endpoint='sensor_details')
 api.add_resource(StatusIndex, '/statuses', endpoint='statuses')
+api.add_resource(OpenAIAPI, '/ai_analyze', endpoint='ai_analyze')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
