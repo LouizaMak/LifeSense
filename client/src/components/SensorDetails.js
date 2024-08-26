@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 function SensorDetails() {
     const [sensor, setSensor] = useState("")
-    const {id} = useParams()
+    const { id } = useParams()
     const [bglData, setBglData] = useState([])
     const [aiAnalysis, setAiAnalysis] = useState({})
     const [isLoading, setIsLoading] = useState(false)
@@ -15,9 +15,10 @@ function SensorDetails() {
             setSensor(sensor)
             setBglData(sensor.datapoints.map(datapoint => datapoint.bgl))
         })
+        handleAIData()
     }, [id])
 
-    function handleAIClick(event) {
+    function handleAIData() {
         setIsLoading(true)
         fetch(`/ai_analyze`, {
             method: 'POST',
@@ -45,7 +46,6 @@ function SensorDetails() {
             : 
             <p>Loading...</p>}
 
-            <button onClick={handleAIClick}>AI Analysis</button>
             {isLoading ? "Loading..." : ""}
             {aiAnalysis ? 
                 <div>
