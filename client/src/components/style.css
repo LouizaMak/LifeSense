@@ -1,0 +1,35 @@
+.login-container {
+    background-color: #5bc9c9c0;
+    display: flex;
+    position: relative;
+    margin: 150px auto;
+    width: 45%;
+    height: 350px;
+    border-radius: 20px;
+    box-shadow: 0 5px 14px rgba(0,0,0,.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: "Montserrat", Arial, sans-serif;
+    align-items: center;
+}
+
+.login-form input {
+    border-radius: 5px;
+    height: 30px;
+    width: 350px;
+    background-color: #f2fffb;
+    font-family: "Montserrat", Arial, sans-serif;
+}
+
+.login-form button {
+    height: 30px;
+    width: 55px;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-weight: 500;
+}

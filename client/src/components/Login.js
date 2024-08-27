@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { loginSchema } from "../schemas/schemas";
 import { AppContext } from "./AppContext";
 import { useNavigate } from "react-router-dom";
+import style from './style.css'
 
 function Login() {
     const { setCurrentUser } = useContext(AppContext)
@@ -35,8 +36,8 @@ function Login() {
     })
 
     return(
-        <>
-            <form onSubmit={handleSubmit}>
+        <div className="login-container">
+            <form className="login-form" onSubmit={handleSubmit}>
                 <h2>Member Login</h2>
 
                 <input type="text" placeholder="Username" name="username" value={values.username} onChange={handleChange} className={errors.username && touched.username ? 'input-error' : null} required/>
@@ -47,7 +48,7 @@ function Login() {
 
                 <button type="submit">Login</button>
             </form>
-        </>
+        </div>
     )
 }
 
