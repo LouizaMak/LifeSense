@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useFormik } from "formik";
 import { signupSchema } from "../schemas/schemas";
 import { AppContext } from "./AppContext";
-import NavBar from "./NavBar";
 import { useNavigate } from "react-router-dom";
 
 function Signup() {
@@ -43,7 +42,6 @@ function Signup() {
 
     return(
         <>
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <h2>Signup</h2>
 

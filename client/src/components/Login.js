@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useFormik } from "formik";
 import { loginSchema } from "../schemas/schemas";
 import { AppContext } from "./AppContext";
-import NavBar from "./NavBar";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -37,7 +36,6 @@ function Login() {
 
     return(
         <>
-            <NavBar />
             <form onSubmit={handleSubmit}>
                 <h2>Member Login</h2>
 

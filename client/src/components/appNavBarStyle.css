@@ -1,0 +1,39 @@
+/*Sticky inline header with padding*/
+.site-header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 8%;
+    background-color: white;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* Gap between navlinks */
+nav {
+    display: flex;
+    gap: 10px;
+    background-color: white;
+}
+
+/* Remove navlink underline and link format */
+.nav-link {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+/* Navbar hover highlight */
+.nav-link:hover {
+    background-color: #004AAD;
+    color: white;
+}
+
+/* Active navbar link is highlighted */
+.active {
+    background-color: #FDBF62;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+}

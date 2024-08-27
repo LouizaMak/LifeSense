@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "./AppContext";
+import style from './appNavBarStyle.css'
 
 function NavBar() {
     const { currentUser, setCurrentUser } = useContext(AppContext)
+    const navigate = useNavigate();
 
     function handleLogoutClick() {
         fetch("/logout", {
@@ -12,30 +14,45 @@ function NavBar() {
         .then(res => {
           if (res.ok) {
             setCurrentUser(null);
+            navigate(`/login`)
           }
         });
     }
 
     return (
         <nav>
-            <div>
-                <Link to="/">Home</Link>
-            </div>
-            <div>
-                {currentUser ? (
-                <>
-                    <Link to="/profile">Profile</Link>
-                    <Link to="/sensors">Sensors</Link>
-                    <Link to="/statuses">Statuses</Link>
-                    <button onClick={handleLogoutClick}>Logout</button>
-                </>
-                ) : (
-                <>
-                    <Link to="/signup">Signup</Link>
-                    <Link to="/login">Login</Link>
-                </>
-                )}
-            </div>
+            {currentUser ? (
+            <>
+                <NavLink 
+                to="/profile"
+                className="nav-link"
+                activeClassName="active">Profile</NavLink>
+                <NavLink 
+                to="/sensors"
+                className="nav-link"
+                activeClassName="active">Sensors</NavLink>
+                <NavLink 
+                to="/statuses"
+                className="nav-link"
+                activeClassName="active">Statuses</NavLink>
+                <span onClick={handleLogoutClick} className="nav-link">Logout</span>
+            </>
+            ) : (
+            <>  
+                <NavLink 
+                to="/"
+                className="nav-link"
+                activeClassName="active">Home</NavLink>
+                <NavLink 
+                to="/signup"
+                className="nav-link"
+                activeClassName="active">Signup</NavLink>
+                <NavLink 
+                to="/login"
+                className="nav-link"
+                activeClassName="active">Login</NavLink>
+            </>
+            )}
         </nav>
     )
 }
