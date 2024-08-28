@@ -9,8 +9,8 @@ from flask_restful import Resource
 from openai import OpenAI
 
 # Local imports
-from config import app, db, api, bcrypt
-from models import Sensor, DataPoint, Status, User
+from config import app, db, api
+from models import Sensor, Status, User
 from datetime import datetime
 
 client = OpenAI()

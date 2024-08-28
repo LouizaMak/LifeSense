@@ -1,12 +1,11 @@
 .login-container {
-    background-color: #5bc9c9c0;
+    background-color: #25BDBE;
     display: flex;
     position: relative;
     margin: 150px auto;
-    width: 45%;
-    height: 350px;
-    border-radius: 20px;
-    box-shadow: 0 5px 14px rgba(0,0,0,.4);
+    width: 25%;
+    height: 60%;
+    box-shadow: 0 5px 34px rgba(0,0,0,.4);
     justify-content: center;
     align-items: center;
 }
@@ -19,17 +18,58 @@
     align-items: center;
 }
 
+.login-form h1{
+    font-family: "Ubuntu", Arial, sans-serif;
+    font-weight: 100;
+    color: white;
+    margin: 75px 0px 75px 0px;
+    padding-top: 10px;
+}
+
+.welcome {
+    font-weight: 500;
+    color: #e1e29e;
+    padding-bottom: 20px;
+}
+
+.login-form .password {
+    font-weight: 400;
+    font-size: small;
+    color: #ffffffce;
+}
+
 .login-form input {
-    border-radius: 5px;
+    border: none;
+    border-bottom: 1px solid #0e6464; 
     height: 30px;
-    width: 350px;
-    background-color: #f2fffb;
+    width: 100%;
+    background-color: #25bebe;
     font-family: "Montserrat", Arial, sans-serif;
+}
+
+.login-form input::placeholder {
+    color: #ffffffce;
 }
 
 .login-form button {
     height: 30px;
-    width: 55px;
+    width: 150px;
     font-family: "Montserrat", Arial, sans-serif;
     font-weight: 500;
+    border-radius: 100px;
+    border-width: 0px;
+    margin-bottom: 60px;
+}
+
+.signup-link {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 10px;
+}
+
+.signup-link span {
+    text-decoration: underline;
+    color: #e1e29e;
 }
