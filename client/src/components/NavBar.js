@@ -44,10 +44,6 @@ function NavBar() {
                 className="nav-link"
                 activeClassName="active">Home</NavLink>
                 <NavLink 
-                to="/signup"
-                className="nav-link"
-                activeClassName="active">Signup</NavLink>
-                <NavLink 
                 to="/login"
                 className="nav-link"
                 activeClassName="active">Login</NavLink>
