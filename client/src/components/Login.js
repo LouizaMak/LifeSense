@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { loginSchema } from "../schemas/schemas";
 import { AppContext } from "./AppContext";
 import { useNavigate } from "react-router-dom";
-import style from './style.css'
+import style from './loginStyle.css';
 
 function Login() {
     const { setCurrentUser } = useContext(AppContext)

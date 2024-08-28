@@ -6,12 +6,17 @@ import Signup from './components/Signup';
 import Sensors from './components/Sensors';
 import Statuses from './components/Statuses';
 import SensorDetails from './components/SensorDetails';
+import Home from './components/Home';
 
 const routes = [
     {
         path: "/",
         element: <App />,
         children: [
+            {
+                path: "/",
+                element: <Home />
+            },
             {
                 path: "/profile",
                 element: <Profile />

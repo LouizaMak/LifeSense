@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "./AppContext";
-import style from './appNavBarStyle.css'
+import style from './appNavBarStyle.css';
 
 function NavBar() {
     const { currentUser, setCurrentUser } = useContext(AppContext)
