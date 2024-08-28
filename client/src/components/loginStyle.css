@@ -121,6 +121,10 @@
     align-items: center;
 }
 
+.overlay-text h1 {
+    font-family: "Ubuntu", Arial, sans-serif;
+}
+
 .slogan {
     display: flex;
     flex-direction: column;
@@ -130,4 +134,19 @@
 .slogan p {
     margin: 5px;
     font-size: 20px;
+}
+
+.panel-1 {
+    display: flex;
+    width: 50%;
+    margin: 100px 0px 50px 175px;
+    align-items: center;
+}
+
+.welcome-text h1 {
+    color: #0097B2;
+}
+
+.woman-smiling-image {
+    clip-path: circle();
 }
