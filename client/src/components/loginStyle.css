@@ -37,6 +37,11 @@
     color: white;
 }
 
+.signup-container button:hover {
+    background-color: #0097B2;
+    color: white;
+}
+
 /* Login Container Style */
 .login-container {
     background-color: #25BDBE;
@@ -85,6 +90,10 @@
 
 .login-form input::placeholder {
     color: #ffffffce;
+}
+
+.login-form button:hover {
+    background-color: #FFDE59;
 }
 
 /* Home Page Style */

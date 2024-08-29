@@ -3,6 +3,10 @@ body {
     font-family: "Montserrat", Arial, sans-serif;
 }
 
+button {
+    cursor: pointer;
+}
+
 /*Sticky inline header with padding*/
 .site-header {
     display: flex;
@@ -33,12 +37,13 @@ nav {
 
 /* Navbar hover highlight */
 .nav-link:hover {
-    background-color: #004AAD;
+    background-color: #0097B2;
     color: white;
+    cursor: pointer;
 }
 
 /* Active navbar link is highlighted */
 .active {
-    background-color: #FDBF62;
+    background-color: #FFBD59;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.08), 0 2px 4px 0 rgba(0, 0, 0, 0.12);
 }

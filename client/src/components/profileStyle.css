@@ -1,0 +1,113 @@
+/* Profile page style */
+.profile-block {
+    margin-top: 75px;
+    margin-left: 400px;
+    font-family: "Montserrat", Arial, sans-serif;
+}
+
+.profile-block button {
+    height: 30px;
+    width: 150px;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-weight: 500;
+    border-radius: 100px;
+    border-width: 0px;
+    margin-bottom: 60px;
+    background-color: #25BDBE;
+    color: white;
+}
+
+.profile-block button:hover {
+    background-color: #0097B2;
+    color: white;
+}
+
+.profile-intro {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.image-button {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.image-button img {
+    clip-path: circle();
+}
+
+.information-section{
+    margin-left: 105px;
+    margin-top: -40px;
+}
+
+/* Profile edit form style */
+
+.form-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 5px 34px rgba(0,0,0,.4);
+    border-radius: 10px;
+    position: absolute;
+    width: 40%;
+    top: 25%;
+    left: 30%;
+    justify-content: center;
+    background-color: #25bebeea;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    font-size: large;
+    color: white;
+}
+
+.edit-form button {
+    height: 30px;
+    width: 150px;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-weight: 500;
+    border-radius: 100px;
+    border-width: 0px;
+    margin-bottom: 20px;
+    background-color: #FFDE59;
+}
+
+.edit-form button:hover {
+    background-color: #FFBD59;
+    color: white;
+}
+
+.edit-text-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.edit-text-fields input {
+    border: none;
+    border-bottom: 1px solid #363636; 
+    height: 30px;
+    width: 120%;
+    background-color: #7ddbdbd0;
+    margin-bottom: 13px;
+    font-family: "Montserrat", Arial, sans-serif;
+}
+
+.edit-radio-buttons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.edit-radio-buttons input {
+    margin-left: 10px;
+}
