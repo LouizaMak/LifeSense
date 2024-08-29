@@ -51,7 +51,7 @@ function Signup() {
                     <input type="text" placeholder="Username" name="username" value={values.username} onChange={handleChange} className={errors.username && touched.username ? 'input-error' : null} required/>
                     {errors.username && touched.username && (<span className="error">{errors.username}</span>)}
 
-                    <input type="text" placeholder="Password" name="password" value={values.password} onChange={handleChange} className={errors.password && touched.password ? 'input-error' : null} required/>
+                    <input type="password" placeholder="Password" name="password" value={values.password} onChange={handleChange} className={errors.password && touched.password ? 'input-error' : null} required/>
                     {errors.password && touched.password && (<span className="error">{errors.password}</span>)}
 
                     <input type="text" placeholder="Email" name="email" value={values.email} onChange={handleChange} className={errors.email && touched.email ? 'input-error' : null} required/>

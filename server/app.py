@@ -50,6 +50,8 @@ class Login(Resource):
         if user.authenticate(password):
             session["user_id"] = user.id
             return user.to_dict(), 200
+        else:
+            return {"message": "Invalid username and password."}, 404
         
 class Logout(Resource):
     def delete(self):

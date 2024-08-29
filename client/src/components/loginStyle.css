@@ -96,6 +96,30 @@
     background-color: #FFDE59;
 }
 
+/* Invalid login style */
+.invalid-block {
+    display: flex;
+    align-items: center;
+    background-color: rgb(212, 212, 212);
+    box-shadow: 0 5px 34px rgba(0,0,0,.4);
+    position: absolute;
+    width: 50%;
+    top: 25%;
+    left: 25%;
+    justify-content: center;
+    color: red;
+    gap: 10px;
+}
+
+.invalid-block span{
+    font-weight: 900;
+}
+
+.invalid-block span:hover {
+    cursor: pointer;
+    color: #0e6464;
+}
+
 /* Home Page Style */
 .image-banner {
     position: relative;
