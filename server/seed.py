@@ -12,6 +12,8 @@ import datetime
 from app import app
 from models import db, Sensor, DataPoint, Status, User
 
+faker = Faker()
+
 # Manufacturer and model information
 manu_model_list = [
     {'Dexcom': ['G7', 'G6 Personal', 'G6 Pro']}, 
@@ -71,6 +73,7 @@ def create_sensors():
             model = users_list[num]['model'],
             application_date = date_list[0],
             removal_date = date_list[1],
+            serial = faker.bothify(text='??#####?#?'),
             user_id = num + 1
         )
         sensors.append(s)
@@ -81,6 +84,7 @@ def create_sensors():
             model = "G6 Pro",
             application_date = date_list[0],
             removal_date = date_list[1],
+            serial = faker.bothify(text='??#??##?#?'),
             user_id = 6
         )
         sensors.append(s)

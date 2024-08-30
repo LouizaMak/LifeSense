@@ -1,24 +1,63 @@
-import { useEffect, useState } from "react"
-import SensorDetailBox from "./SensorDetailBox"
+import { useEffect, useState } from "react";
+import SensorDetailBox from "./SensorDetailBox";
+import style from "./sensorsStyle.css";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
 function Sensors() {
     const [displaySensors, setDisplaySensors] = useState([])
+    const [isLoading, setIsLoading] = useState("Loading...")
+    const [isEmpty, setIsEmpty] = useState(false)
 
     useEffect(() => {
         fetch("/sensors")
         .then(res => res.json())
-        .then(sensors => setDisplaySensors(sensors))
+        .then(sensors => {
+            setIsLoading("")
+            if (sensors.length > 0) {
+                setDisplaySensors(sensors)
+            } else {
+                setIsEmpty(true)
+            }
+        })
     }, [])
 
     return (
-        <>
-            {displaySensors.length > 0 ?
-            <h1>{displaySensors[0].manufacturer} {displaySensors[0].model} Sensors</h1> 
-            : <p>Loading</p>}
-            <div className="sensor-boxes">
-                {displaySensors.map(sensor => <SensorDetailBox key={sensor.id} sensor={sensor} />)} 
+        <div className="sensors-page">
+            <div className="device-panel">
+                {displaySensors.length > 0 ?
+                <>
+                    <h2>Sensors Panel</h2> 
+                    <p>Manufacturer: {displaySensors[0].manufacturer}</p>
+                    <p>Model: {displaySensors[0].model}</p>
+                </>
+                : isLoading}
             </div>
-        </>
+            <div className="sensors-container">
+                {isEmpty ?
+                    <div className="empty-sensors">
+                        <h2>Data not found. Please sync your device to begin uploading.</h2>
+                        <button>Sync Device</button>
+                    </div> :
+                    <div className="sensors-table">
+                        <TableContainer component={Paper}>
+                            <Table aria-label="collapsible table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell />
+                                        <TableCell>Date (Application-Removal)</TableCell>
+                                        <TableCell align="left">Serial No.</TableCell>
+                                        <TableCell />
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {displaySensors.map(sensor => <SensorDetailBox key={sensor.id} sensor={sensor} />)}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+                }
+            </div>
+        </div>
     )
 }
 

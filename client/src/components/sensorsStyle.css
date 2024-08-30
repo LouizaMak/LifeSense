@@ -1,0 +1,75 @@
+/* Empty sensors style */
+.empty-sensors {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 5px 34px rgba(0,0,0,.4);
+    position: absolute;
+    width: 50%;
+    top: 25%;
+    left: 25%;
+    justify-content: center;
+    background-color: white;
+    padding-top: 20px;
+    border-radius: 10px;
+}
+
+.empty-sensors button {
+    height: 50px;
+    width: 175px;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-weight: 600;
+    font-size: large;
+    border-radius: 100px;
+    border-width: 0px;
+    margin-bottom: 40px;
+    background-color: #FFDE59;
+    color: rgb(65, 65, 65);
+}
+
+.empty-sensors button:hover {
+    background-color: #FFBD59;
+    color: white;
+}
+
+/* Sensors container style */
+.sensors-page {
+    display: flex;
+}
+
+.device-panel {
+    flex-grow: 1;
+    margin: 50px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-left: 30px;
+}
+
+.sensors-container {
+    flex-grow: 5;
+    display: flex;
+    flex-direction: column;
+}
+
+.sensors-table {
+    padding: 50px;
+}
+
+.details-button {
+    height: 25px;
+    width: 100px;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-weight: 400;
+    font-size: medium;
+    border-radius: 100px;
+    border-width: 0px;
+    background-color: #FFDE59;
+    color: rgb(65, 65, 65);
+}
+
+.details-button:hover {
+    background-color: #FFBD59;
+    color: white;
+}

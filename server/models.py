@@ -11,6 +11,7 @@ class Sensor(db.Model, SerializerMixin):
     model = db.Column(db.String)
     application_date = db.Column(db.DateTime)
     removal_date = db.Column(db.DateTime)
+    serial = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     user = db.relationship('User', back_populates='sensors')

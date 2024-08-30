@@ -81,6 +81,7 @@ class SensorIndex(Resource):
             model = data.get("model"),
             application_date = data.get("application_date"),
             removal_date = data.get("removal_date"),
+            serial = data.get("serial"),
             user_id = session.get("user_id")
         )
         db.session.add(new_sensor)
