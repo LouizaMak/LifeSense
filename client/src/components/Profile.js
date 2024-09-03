@@ -1,5 +1,5 @@
-import { AppContext } from "./AppContext"
-import { useContext, useState } from "react";
+import { AppContext } from "./AppProvider"
+import React, { useContext, useState } from "react";
 import ProfileForm from "./ProfileForm";
 import profilePicture from "../images/default_picture.jpg";
 import style from "./profileStyle.css"

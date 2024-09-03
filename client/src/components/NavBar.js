@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AppContext } from "./AppContext";
+import { AppContext } from "./AppProvider";
 import style from './appNavBarStyle.css';
 
 function NavBar() {

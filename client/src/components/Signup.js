@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useFormik } from "formik";
 import { signupSchema } from "../schemas/schemas";
-import { AppContext } from "./AppContext";
+import { AppContext } from "./AppProvider";
 import { useNavigate } from "react-router-dom";
 import style from "./signupStyle.css";
 

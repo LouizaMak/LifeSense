@@ -73,3 +73,33 @@
     background-color: #FFBD59;
     color: white;
 }
+
+/* Sensor details style */
+.sensor-details {
+    display: flex;
+    margin: 50px 80px;
+    gap: 50px;
+}
+
+.analytics-panel {
+    min-width: 250px;
+    background-color: white;
+    padding-inline: 30px;
+}
+
+.graph-ai-block {
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+    gap: 10px;
+}
+
+.graph-panel {
+    background-color: white;
+    padding:  10px 30px;
+}
+
+.ai-panel {
+    background-color: white;
+    padding:  10px 30px;
+}

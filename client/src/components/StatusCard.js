@@ -1,4 +1,5 @@
 import DataRow from "./DataRow";
+import React from 'react';
 
 function StatusCard({ status }) {
     const datapointsArray = status.datapoints

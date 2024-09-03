@@ -1,3 +1,4 @@
+import React from 'react';
 import familyTrip from "../images/family_trip.jpg";
 import girlStretching from "../images/girl_stretching.png";
 import womanSmiling from "../images/woman_smiling.png";

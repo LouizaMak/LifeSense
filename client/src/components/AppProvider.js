@@ -1,5 +1,4 @@
-import React, { createContext } from 'react';
-import { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 const AppContext = createContext();
 
@@ -16,9 +15,9 @@ function AppProvider({ children }) {
 }, [])
 
     return (
-        <AppContext.Provider value={{currentUser, setCurrentUser}}>
-            {children}
-        </AppContext.Provider>
+      <AppContext.Provider value={{currentUser, setCurrentUser}}>
+          {children}
+      </AppContext.Provider>
     );
 };
 

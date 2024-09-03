@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import { loginSchema } from "../schemas/schemas";
-import { AppContext } from "./AppContext";
+import { AppContext } from "./AppProvider";
 import { useNavigate } from "react-router-dom";
 import style from './loginStyle.css';
 

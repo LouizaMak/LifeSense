@@ -1,5 +1,5 @@
-import { useContext } from "react"
-import { AppContext } from "./AppContext"
+import React, { useContext } from "react"
+import { AppContext } from "./AppProvider"
 import { useFormik } from "formik"
 import { editProfileSchema } from "../schemas/schemas"
 
