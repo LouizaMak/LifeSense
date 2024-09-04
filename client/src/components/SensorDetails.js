@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { LineChart, Line, YAxis, XAxis, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, YAxis, XAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 function SensorDetails() {
     const [sensor, setSensor] = useState("")
@@ -8,6 +8,8 @@ function SensorDetails() {
     const [bglData, setBglData] = useState([])
     const [aiAnalysis, setAiAnalysis] = useState({})
     const [isLoading, setIsLoading] = useState(false)
+    const [dataReady, setDataReady] = useState(false)
+    const [dataObj, setDataObj] = useState({})
 
     useEffect(() => {
         fetch(`/sensors/${id}`)
@@ -16,16 +18,14 @@ function SensorDetails() {
             setSensor(sensor)
             generateDataArray(sensor.datapoints)
             handleAIData()
+            analyzeData()
         })
-    }, [id])
+    }, [id, dataReady])
 
     function generateDataArray(dataPoints) {
-        console.log(dataPoints[0].date_time.slice(5,10))
-        let i = 0
         const dataArray = []
-        dataPoints.map(datapoint => dataArray.push({name: datapoint.date_time.slice(5,10), value: datapoint.bgl}))
+        dataPoints.map(datapoint => dataArray.push({name: datapoint.date_time.slice(5,10), BGL: datapoint.bgl}))
         setBglData(dataArray)
-        console.log(dataArray)
     }
 
     function handleAIData() {
@@ -44,12 +44,24 @@ function SensorDetails() {
         })
     }
 
+    function analyzeData() {
+        const bglRawData = bglData.map(dataObj => dataObj.BGL).sort((a, b) => a - b)
+        if (bglRawData.length > 0) {
+            const averageBGL = Math.round(bglRawData.reduce((a, b) => a + b)/bglRawData.length)
+            setDataObj({averageBGL: averageBGL, highBGL: bglRawData.pop(), lowBGL: bglRawData.shift()})
+        } else {
+            setDataReady(!dataReady)
+        }
+    }
+
     const renderLineChart = (
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={350}>
             <LineChart data={bglData}>
-                    <Line type="monotone" dataKey="value" stroke="#8884d8"/>
-                    <XAxis dataKey="name" />
-                    <YAxis tickCount={40} domain={[0,220]} />
+                    <Line type="monotone" dataKey="BGL" stroke="#8884d8"/>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" label={{value: "Date", position: "insideBottom"}} height={50}/>
+                    <YAxis tickCount={40} domain={[0,220]} label={{value: "BGL (mg/dL)", angle: -90, position: 'insideLeft'}} width={70}/>
+                    <Tooltip />
             </LineChart>
         </ResponsiveContainer>
     )
@@ -59,9 +71,7 @@ function SensorDetails() {
             <div className="graph-ai-block">
                 {typeof sensor === 'object' ? 
                 <div className="graph-panel">
-                    <h1>Sensor Details</h1>
-                    <h2>{sensor.model} {sensor.manufacturer}</h2>
-                    <h3>{sensor.application_date.slice(0,10)} - {sensor.removal_date.slice(0,10)}</h3>
+                    <h1>Sensor Data ({sensor.application_date.slice(0,10)} - {sensor.removal_date.slice(0,10)})</h1>
                     {renderLineChart}
                 </div>
                 : 
@@ -78,9 +88,10 @@ function SensorDetails() {
             </div>
             <div className="analytics-panel">
                 <h1>Analytics</h1>
-                <p>Average BGL: </p>
-                <p>Highest BGL:</p>
-                <p>Lowest BGL:</p>
+                <h3>{sensor.model} {sensor.manufacturer}</h3>
+                <p>Average BGL: {dataObj.averageBGL}</p>
+                <p>Highest BGL: {dataObj.highBGL}</p>
+                <p>Lowest BGL: {dataObj.lowBGL}</p>
             </div>
         </div>
     )
