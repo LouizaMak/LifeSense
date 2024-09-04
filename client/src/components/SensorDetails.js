@@ -73,6 +73,10 @@ function SensorDetails() {
                 <div className="graph-panel">
                     <h1>Sensor Data ({sensor.application_date.slice(0,10)} - {sensor.removal_date.slice(0,10)})</h1>
                     {renderLineChart}
+                    <div>
+                        <button>Add</button>
+                        <button>Delete</button>
+                    </div>
                 </div>
                 : 
                 <p>Loading...</p>}

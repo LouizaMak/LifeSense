@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import DataRow from "./DataRow";
 import { useNavigate } from "react-router-dom";
 import { Collapse, IconButton, TableCell, TableRow, Box, Typography, Table, TableHead, TableBody } from "@mui/material";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -48,7 +47,7 @@ function SensorDetailBox({ sensor }) {
                                 {dataPreviewArray.map(data => (
                                     <TableRow key={data.id}>
                                         <TableCell component="th" scope="row">{data.date_time.slice(0,10)}</TableCell>
-                                        <TableCell>{data.date_time}</TableCell>
+                                        <TableCell>{data.date_time.slice(10)}</TableCell>
                                         <TableCell align="right">{data.bgl}</TableCell>
                                         <TableCell align="right">{data.status_id}</TableCell>
                                     </TableRow>
