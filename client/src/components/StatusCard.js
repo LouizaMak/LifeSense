@@ -1,11 +1,31 @@
 import React, { useState } from 'react';
-import { Collapse, IconButton, TableCell, TableRow, Box, Typography, Table, TableHead, TableBody } from "@mui/material";
+import { Collapse, IconButton, TableCell, TableRow, Box, Typography, Table, TableHead, TableBody, tableCellClasses } from "@mui/material";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { styled } from '@mui/material/styles';
 
 function StatusCard({ status }) {
     const datapointsArray = status.datapoints
     const sortedData = datapointsArray.sort((a, b) => new Date(b.date_time) - new Date(a.date_time)).slice(0, 3);
     const [open, setOpen] = useState(false)
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+          backgroundColor: theme.palette.action.hover,
+        },
+        '&:last-child td, &:last-child th': {
+          border: 0,
+        },
+      }));
+
+      const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: "#0097B2",
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+      }));
 
     return(
         <React.Fragment>
@@ -28,18 +48,18 @@ function StatusCard({ status }) {
                         <Table size="small" aria-label="dataPoints">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Date</TableCell>
-                                    <TableCell>Time</TableCell>
-                                    <TableCell align="right">BGL</TableCell>
+                                    <StyledTableCell>Date</StyledTableCell>
+                                    <StyledTableCell>Time</StyledTableCell>
+                                    <StyledTableCell align="right">BGL</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {sortedData.map(data => (
-                                    <TableRow key={data.id}>
+                                    <StyledTableRow key={data.id}>
                                         <TableCell component="th" scope="row">{data.date_time.slice(0,10)}</TableCell>
                                         <TableCell>{data.date_time.slice(10)}</TableCell>
                                         <TableCell align="right">{data.bgl}</TableCell>
-                                    </TableRow>
+                                    </StyledTableRow>
                                 ))}
                             </TableBody>
                         </Table>

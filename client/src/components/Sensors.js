@@ -22,23 +22,24 @@ function Sensors() {
     }, [])
 
     return (
-        <div className="sensors-page">
-            <div className="device-panel">
-                {displaySensors.length > 0 ?
-                <>
-                    <h2>Sensors Panel</h2> 
-                    <p>Manufacturer: {displaySensors[0].manufacturer}</p>
-                    <p>Model: {displaySensors[0].model}</p>
-                </>
-                : isLoading}
-            </div>
-            <div className="sensors-container">
-                {isEmpty ?
-                    <div className="empty-sensors">
-                        <h2>Data not found. Please sync your device to begin uploading.</h2>
-                        <button>Sync Device</button>
-                    </div> :
-                    <div className="sensors-table">
+        <>
+            {isEmpty ?
+                <div className="empty-sensors">
+                    <h2>Data not found. Please sync your device to begin uploading.</h2>
+                    <button>Sync Device</button>
+                </div> :
+                <div className="sensors-page">
+                    <div className="device-panel">
+                        {displaySensors.length > 0 ?
+                        <>
+                            <h2>Sensors Panel</h2> 
+                            <p>Manufacturer: {displaySensors[0].manufacturer}</p>
+                            <p>Model: {displaySensors[0].model}</p>
+                            <p>Recommended Sensor Change: 2 Weeks</p>
+                        </>
+                        : isLoading}
+                    </div>
+                    <div className="sensors-container">
                         <TableContainer component={Paper}>
                             <Table aria-label="collapsible table">
                                 <TableHead>
@@ -55,9 +56,9 @@ function Sensors() {
                             </Table>
                         </TableContainer>
                     </div>
-                }
-            </div>
-        </div>
+                </div>
+            }
+        </>
     )
 }
 

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Collapse, IconButton, TableCell, TableRow, Box, Typography, Table, TableHead, TableBody } from "@mui/material";
+import { Collapse, IconButton, TableCell, TableRow, Box, Typography, Table, TableHead, TableBody, tableCellClasses } from "@mui/material";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { styled } from '@mui/material/styles';
 import style from "./sensorsStyle.css";
 
 function SensorDetailBox({ sensor }) {
@@ -12,6 +13,25 @@ function SensorDetailBox({ sensor }) {
     function handleDetailsClick(event) {
         navigate(`/sensors/${sensor.id}`)
     }
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+          backgroundColor: theme.palette.action.hover,
+        },
+        '&:last-child td, &:last-child th': {
+          border: 0,
+        },
+      }));
+
+      const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: "#0097B2",
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+      }));
 
     return(
         <React.Fragment>
@@ -37,20 +57,20 @@ function SensorDetailBox({ sensor }) {
                         <Table size="small" aria-label="dataPoints">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Date</TableCell>
-                                    <TableCell>Time</TableCell>
-                                    <TableCell align="right">BGL</TableCell>
-                                    <TableCell align="right">Risk</TableCell>
+                                    <StyledTableCell>Date</StyledTableCell>
+                                    <StyledTableCell>Time</StyledTableCell>
+                                    <StyledTableCell align="right">BGL</StyledTableCell>
+                                    <StyledTableCell align="right">Risk</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {dataPreviewArray.map(data => (
-                                    <TableRow key={data.id}>
+                                    <StyledTableRow key={data.id}>
                                         <TableCell component="th" scope="row">{data.date_time.slice(0,10)}</TableCell>
                                         <TableCell>{data.date_time.slice(10)}</TableCell>
                                         <TableCell align="right">{data.bgl}</TableCell>
                                         <TableCell align="right">{data.status_id}</TableCell>
-                                    </TableRow>
+                                    </StyledTableRow>
                                 ))}
                             </TableBody>
                         </Table>
