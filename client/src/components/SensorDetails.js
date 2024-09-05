@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { LineChart, Line, YAxis, XAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { AIContext } from "./AIProvider";
 
 function SensorDetails() {
     const [sensor, setSensor] = useState("")
@@ -10,6 +11,7 @@ function SensorDetails() {
     const [isLoading, setIsLoading] = useState(false)
     const [dataReady, setDataReady] = useState(false)
     const [dataObj, setDataObj] = useState({})
+    const { aiAnalysisEnabled, setAiAnalysisEnabled } = useContext(AIContext)
 
     useEffect(() => {
         fetch(`/sensors/${id}`)
@@ -82,13 +84,16 @@ function SensorDetails() {
                 <p>Loading...</p>}
 
                 {isLoading ? "Loading..." : ""}
-                {aiAnalysis ? 
+                {aiAnalysisEnabled && aiAnalysis ? 
                     <div className="ai-panel">
                         <h1>Analysis</h1>
                         <p>{aiAnalysis['recommendations']}</p>
                         <p>{aiAnalysis['lifestyle_changes']}</p>
                     </div>
-                : ""}
+                :   <div className="ai-panel">
+                        <p>AI Analysis is turned off. It can be turned on in user's settings.</p>
+                    </div>
+                } 
             </div>
             <div className="analytics-panel">
                 <h1>Analytics</h1>

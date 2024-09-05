@@ -1,15 +1,25 @@
 import { AppContext } from "./AppProvider";
 import React, { useContext, useState } from "react";
 import ProfileForm from "./ProfileForm";
+import Settings from "./Settings";
 import style from "./profileStyle.css"
 import Avatar from '@mui/material/Avatar';
+import { AIContext } from "./AIProvider";
 
 function Profile() {
     const { currentUser } = useContext(AppContext)
     const [isEditing, setIsEditing] = useState(false)
+    const [isSetting, setIsSetting] = useState(false)
+    const { aiAnalysisEnabled, setAiAnalysisEnabled } = useContext(AIContext)
+
+    console.log(aiAnalysisEnabled)
 
     function handleToggleForm(e) {
-        setIsEditing(!isEditing)
+      setIsEditing(!isEditing)
+    }
+
+    function handleSettingToggle(e) {
+      setIsSetting(!isSetting)
     }
 
     function stringToColor(string) {
@@ -61,10 +71,11 @@ function Profile() {
                     <h2>Joined: {currentUser.date_joined.slice(0,10)}</h2>
                     <p>Age: {currentUser.age}</p>
                     <p>Gender: {currentUser.gender}</p>
-                    <button>Settings</button>
+                    <button onClick={handleSettingToggle}>Settings</button>
                 </div>
             </div>
             {isEditing ? <ProfileForm onToggleForm={handleToggleForm} /> : ""}
+            {isSetting ? <Settings onToggleForm={handleSettingToggle} aiAnalysisEnabled={aiAnalysisEnabled} setAiAnalysisEnabled={setAiAnalysisEnabled} /> : ""}
         </>
     )
 }

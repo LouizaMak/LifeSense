@@ -32,7 +32,7 @@ function Sensors() {
                     <div className="device-panel">
                         {displaySensors.length > 0 ?
                         <>
-                            <h2>Sensors Panel</h2> 
+                            <h2>Device Info</h2> 
                             <p>Manufacturer: {displaySensors[0].manufacturer}</p>
                             <p>Model: {displaySensors[0].model}</p>
                             <p>Recommended Sensor Change: 2 Weeks</p>
@@ -40,6 +40,7 @@ function Sensors() {
                         : isLoading}
                     </div>
                     <div className="sensors-container">
+                        <h1>Sensors Overview</h1>
                         <TableContainer component={Paper}>
                             <Table aria-label="collapsible table">
                                 <TableHead>

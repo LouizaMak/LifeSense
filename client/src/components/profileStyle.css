@@ -107,3 +107,43 @@
 .edit-radio-buttons input {
     margin-left: 10px;
 }
+
+/* Settings modal style */
+.settings-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 5px 34px rgba(0,0,0,.4);
+    border-radius: 10px;
+    position: absolute;
+    width: 40%;
+    top: 25%;
+    left: 28%;
+    justify-content: center;
+    background-color: #25bebeea;
+    padding: 30px;
+}
+
+.ai-toggle {
+    display: flex;
+    gap: 10px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.cancel-button {
+    height: 30px;
+    width: 150px;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-weight: 500;
+    border-radius: 100px;
+    border-width: 0px;
+    margin-bottom: 20px;
+    background-color: #FFDE59;
+}
+
+.cancel-button:hover {
+    background-color: #FFBD59;
+    color: white;
+}
