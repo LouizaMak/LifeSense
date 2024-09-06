@@ -1,10 +1,23 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { AppContext } from "./AppProvider"
 import { useFormik } from "formik"
 import { editProfileSchema } from "../schemas/schemas"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo"
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar"
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
+import dayjs from "dayjs"
 
 function ProfileForm({ onToggleForm }) {
     const { currentUser, setCurrentUser } = useContext(AppContext)
+    const [dateObj, setDateObj] = useState(dayjs(new Date()))
+
+    const maxDate = dayjs()
+
+    function handleDateChange(event) {
+        values.birthday = `${event.$M+1}-${event.$D}-${event.$y}`
+        setDateObj(event)
+    }
 
     const { values, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
@@ -12,6 +25,7 @@ function ProfileForm({ onToggleForm }) {
             last_name: currentUser.last_name,
             gender: currentUser.gender,
             age: currentUser.age,
+            birthday: currentUser.birthday
         },
         validationSchema: editProfileSchema,
         onSubmit: (values) => {
@@ -45,7 +59,14 @@ function ProfileForm({ onToggleForm }) {
                     <input type="number" placeholder="Age" name="age" value={values.age} onChange={handleChange} className={errors.age && touched.age ? 'input-error' : null} required/>
                     {errors.age && touched.age && (<span className="error">{errors.age}</span>)}
                 </div>
-
+                <div className="birthday-container">
+                    <p>Birthday</p>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer components={['DateCalendar']}>
+                                <DateCalendar label="Birthday" value={dateObj} onChange={handleDateChange} maxDate={maxDate}/>
+                            </DemoContainer>
+                    </LocalizationProvider>
+                </div>
                 <div className="edit-radio-buttons">
                     <input type="radio" id="f" name="gender" value="F" onChange={handleChange} checked={values.gender === 'F'} required/>
                     <label for="f">Female</label>
@@ -56,8 +77,8 @@ function ProfileForm({ onToggleForm }) {
                     <input type="radio" id="pnta" name="gender" value="PNTA" onChange={handleChange} required/>
                     <label for="pnta">Prefer Not To Answer</label>
                 </div>
-                <button type="submit">Confirm</button>
-                <button type="button" onClick={onToggleForm}>Cancel</button>
+                <button className="editform-buttons" type="submit">Confirm</button>
+                <button className="editform-buttons" type="button" onClick={onToggleForm}>Cancel</button>
             </form>
         </div>
     )

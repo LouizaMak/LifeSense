@@ -1,7 +1,33 @@
-/* Empty sensors style */
-.empty-sensors {
+/* Color refactor */
+.empty-sensors, .device-panel, .analytics-panel, .graph-panel, .ai-panel {
+    background-color: white;
+}
+
+.empty-sensors button:hover, .details-button:hover, .graph-panel button:hover {
+    color: white;
+}
+
+.empty-sensors button, .details-button, .graph-panel button {
+    background-color: #FFDE59;
+}
+
+.sensors-container, .details-button:hover, .graph-panel button:hover {
+    background-color: #FFBD59;
+}
+
+/* Font refactor */
+.empty-sensors button, .details-button, .graph-panel button {
+    font-family: "Montserrat", Arial, sans-serif;
+}
+
+/* Flex-box refactor */
+.empty-sensors, .device-panel, .sensors-container, .graph-ai-block, .graph-panel  {
     display: flex;
     flex-direction: column;
+}
+
+/* Empty sensors style */
+.empty-sensors {
     align-items: center;
     box-shadow: 0 5px 34px rgba(0,0,0,.4);
     position: absolute;
@@ -9,7 +35,6 @@
     top: 25%;
     left: 25%;
     justify-content: center;
-    background-color: white;
     padding-top: 20px;
     border-radius: 10px;
 }
@@ -17,19 +42,12 @@
 .empty-sensors button {
     height: 50px;
     width: 175px;
-    font-family: "Montserrat", Arial, sans-serif;
     font-weight: 600;
     font-size: large;
     border-radius: 100px;
     border-width: 0px;
     margin-bottom: 40px;
-    background-color: #FFDE59;
     color: rgb(65, 65, 65);
-}
-
-.empty-sensors button:hover {
-    background-color: #FFBD59;
-    color: white;
 }
 
 /* Sensors container style */
@@ -41,9 +59,6 @@
 
 .device-panel {
     flex-grow: 1;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
     padding: 20px 30px;
     box-shadow: 0 5px 10px rgba(0,0,0,.3);
     border-radius: 10px;
@@ -53,30 +68,20 @@
 
 .sensors-container {
     flex-grow: 5;
-    display: flex;
-    flex-direction: column;
     align-items: center;
     box-shadow: 0 5px 10px rgba(0,0,0,.3);
     border-radius: 10px;
-    background-color: #FFBD59;
     color: rgb(46, 43, 43);
 }
 
 .details-button {
     height: 25px;
     width: 100px;
-    font-family: "Montserrat", Arial, sans-serif;
     font-weight: 400;
     font-size: medium;
     border-radius: 100px;
     border-width: 0px;
-    background-color: #FFDE59;
     color: rgb(65, 65, 65);
-}
-
-.details-button:hover {
-    background-color: #FFBD59;
-    color: white;
 }
 
 /* Sensor details style */
@@ -89,7 +94,6 @@
 .analytics-panel, .graph-panel, .ai-panel {
     box-shadow: 0 5px 34px rgba(0,0,0,.4);
     padding:  10px 30px;
-    background-color: white;
 }
 
 .analytics-panel {
@@ -97,12 +101,9 @@
 }
 
 .graph-ai-block {
-    display: flex;
-    flex-direction: column;
     max-height: 300px;
     gap: 30px;
     flex-grow: 1;
-    
 }
 
 .analytics-panel {
@@ -110,8 +111,6 @@
 }
 
 .graph-panel {
-    display: flex;
-    flex-direction: column;
     align-items: flex-end;
 }
 
@@ -123,15 +122,8 @@
 .graph-panel button {
     height: 30px;
     width: 150px;
-    font-family: "Montserrat", Arial, sans-serif;
     font-weight: 500;
     border-radius: 100px;
     border-width: 0px;
     margin-bottom: 20px;
-    background-color: #FFDE59;
-}
-
-.graph-panel button:hover {
-    background-color: #FFBD59;
-    color: white;
 }

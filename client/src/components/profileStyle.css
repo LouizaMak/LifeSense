@@ -1,25 +1,38 @@
+/* Font refactor */
+.profile-block, .profile-block button, .editform-buttons, .edit-text-fields input, .cancel-button {
+    font-family: "Montserrat", Arial, sans-serif;
+}
+
+/* Flex-box refactor */
+.form-popup, .edit-form, .edit-text-fields, .image-button, .settings-modal, .birthday-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Text color - white refactor */
+.profile-block button, .edit-form, .ai-toggle, .cancel-button:hover {
+    color: white;
+}
+
 /* Profile page style */
 .profile-block {
     margin-top: 75px;
     margin-left: 750px;
-    font-family: "Montserrat", Arial, sans-serif;
 }
 
 .profile-block button {
     height: 30px;
     width: 150px;
-    font-family: "Montserrat", Arial, sans-serif;
     font-weight: 500;
     border-radius: 100px;
     border-width: 0px;
     margin-bottom: 60px;
     background-color: #25BDBE;
-    color: white;
 }
 
 .profile-block button:hover {
     background-color: #0097B2;
-    color: white;
 }
 
 .profile-intro {
@@ -29,10 +42,7 @@
 }
 
 .image-button {
-    display: flex;
-    flex-direction: column;
     gap: 20px;
-    align-items: center;
 }
 
 .information-section{
@@ -41,11 +51,7 @@
 }
 
 /* Profile edit form style */
-
 .form-popup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     box-shadow: 0 5px 34px rgba(0,0,0,.4);
     border-radius: 10px;
     position: absolute;
@@ -57,18 +63,13 @@
 }
 
 .edit-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 30px;
     font-size: large;
-    color: white;
 }
 
-.edit-form button {
+.editform-buttons {
     height: 30px;
     width: 150px;
-    font-family: "Montserrat", Arial, sans-serif;
     font-weight: 500;
     border-radius: 100px;
     border-width: 0px;
@@ -76,15 +77,12 @@
     background-color: #FFDE59;
 }
 
-.edit-form button:hover {
+.editform-buttons:hover {
     background-color: #FFBD59;
     color: white;
 }
 
 .edit-text-fields {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     margin: 20px;
 }
 
@@ -95,12 +93,12 @@
     width: 120%;
     background-color: #7ddbdbd0;
     margin-bottom: 13px;
-    font-family: "Montserrat", Arial, sans-serif;
 }
 
 .edit-radio-buttons {
     display: flex;
     align-items: center;
+    margin-top: -25px;
     margin-bottom: 25px;
 }
 
@@ -110,9 +108,6 @@
 
 /* Settings modal style */
 .settings-modal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     box-shadow: 0 5px 34px rgba(0,0,0,.4);
     border-radius: 10px;
     position: absolute;
@@ -128,14 +123,12 @@
     display: flex;
     gap: 10px;
     font-weight: 600;
-    color: white;
     margin-bottom: 25px;
 }
 
 .cancel-button {
     height: 30px;
     width: 150px;
-    font-family: "Montserrat", Arial, sans-serif;
     font-weight: 500;
     border-radius: 100px;
     border-width: 0px;
@@ -145,5 +138,8 @@
 
 .cancel-button:hover {
     background-color: #FFBD59;
-    color: white;
+}
+
+.birthday-container p {
+    margin-bottom: -10px;
 }

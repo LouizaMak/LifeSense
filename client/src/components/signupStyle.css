@@ -1,3 +1,10 @@
+/* Flex-box refactor */
+.signup-form, .text-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .signup-form-container {
     background-color: white;
     box-shadow: 0 5px 34px rgba(0,0,0,.4);
@@ -7,17 +14,11 @@
     border-radius: 10px;
 }
 
-.signup-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.signup-form {
     padding: 40px;
 }
 
-.text-input{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.text-input {
     gap: 10px;
     width: 80%;
 }
@@ -28,6 +29,10 @@
     height: 30px;
     width: 70%;
     font-family: "Montserrat", Arial, sans-serif;
+}
+
+.text-input p {
+    margin-bottom: -15px;
 }
 
 .signup-button {
@@ -48,5 +53,5 @@
 }
 
 .gender-radio {
-    margin: 30px 0px 10px 0px;
+    margin: -25px 0px 10px 0px;
 }
