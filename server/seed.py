@@ -30,6 +30,7 @@ users_list = [
      'manufacturer': 'Dexcom',
      'model': 'G6 Pro',
      'gender': 'F',
+     'birthday': datetime.date(2001, 9, 3),
      'date_joined': datetime.date(2016, 10, 2),
     },
     {'first_name': 'Tracy',
@@ -37,6 +38,7 @@ users_list = [
      'manufacturer': 'Abbott',
      'model': 'FreeStyle Libre 3',
      'gender': 'F',
+     'birthday': datetime.date(1999, 2, 3),
      'date_joined': datetime.date(2016, 3, 17),
     },
     {'first_name': 'Chance',
@@ -44,6 +46,7 @@ users_list = [
      'manufacturer': 'Medtronic',
      'model': 'Guardian Sensor 3',
      'gender': 'M',
+     'birthday': datetime.date(2003, 10, 8),
      'date_joined': datetime.date(2015, 1, 1),
     },
     {'first_name': 'Justin',
@@ -51,6 +54,7 @@ users_list = [
      'manufacturer': 'Eversense',
      'model': 'E3',
      'gender': 'M',
+     'birthday': datetime.date(1973, 9, 10),
      'date_joined': datetime.date(2017, 4, 19),
     },
     {'first_name': 'Patrick',
@@ -58,6 +62,7 @@ users_list = [
      'manufacturer': 'Dexcom',
      'model': 'G7',
      'gender': 'M',
+     'birthday': datetime.date(1983, 3, 1),
      'date_joined': datetime.date(2016, 6, 30),
     }
 ]
@@ -106,6 +111,7 @@ def create_users():
             date_joined = user['date_joined'],
             first_name = user['first_name'],
             last_name = user['last_name'],
+            birthday = user['birthday'],
             age = randint(21, 99),
             gender = user['gender'],
             email = fake.email()

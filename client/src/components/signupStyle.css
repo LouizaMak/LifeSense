@@ -30,7 +30,7 @@
     font-family: "Montserrat", Arial, sans-serif;
 }
 
-.signup-form button {
+.signup-button {
     height: 40px;
     width: 150px;
     font-family: "Montserrat", Arial, sans-serif;
@@ -43,7 +43,7 @@
     color: white;
 }
 
-.signup-form button:hover {
+.signup-button:hover {
     background-color: #0e6464;
 }
 

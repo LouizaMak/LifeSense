@@ -1,13 +1,29 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import { signupSchema } from "../schemas/schemas";
 import { AppContext } from "./AppProvider";
 import { useNavigate } from "react-router-dom";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import dayjs from 'dayjs';
 import style from "./signupStyle.css";
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 
 function Signup() {
     const { setCurrentUser } = useContext(AppContext)
     const navigate = useNavigate();
+    const [dateObj, setDateObj] = useState(dayjs(new Date()))
+
+    const maxDate = dayjs()
+
+    function handleDateChange(event) {
+        values.birthday = `${event.$M+1}-${event.$D}-${event.$y}`
+        setDateObj(event)
+    }
+
+    console.log(dateObj)
 
     const { values, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
@@ -17,6 +33,7 @@ function Signup() {
             first_name: "",
             last_name: "",
             gender: "",
+            birthday: "",
             age: "",
             date_joined: new Date(Date.now())
         },
@@ -63,6 +80,12 @@ function Signup() {
                     <input type="text" placeholder="Last Name" name="last_name" value={values.last_name} onChange={handleChange} className={errors.last_name && touched.last_name ? 'input-error' : null} required/>
                     {errors.last_name && touched.last_name && (<span className="error">{errors.last_name}</span>)}
 
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DateCalendar']}>
+                            <DateCalendar label="Birthday" value={dateObj} onChange={handleDateChange} maxDate={maxDate}/>
+                        </DemoContainer>
+                    </LocalizationProvider>
+
                     <input type="number" placeholder="Age" name="age" value={values.age} onChange={handleChange} className={errors.age && touched.age ? 'input-error' : null} required/>
                     {errors.age && touched.age && (<span className="error">{errors.age}</span>)}
 
@@ -81,7 +104,7 @@ function Signup() {
 
                 </div>
 
-                <button type="submit">Sign Up</button>
+                <button className="signup-button" type="submit">Sign Up</button>
             </form>
         </div>
     )

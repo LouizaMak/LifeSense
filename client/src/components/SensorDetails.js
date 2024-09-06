@@ -82,8 +82,6 @@ function SensorDetails() {
                 </div>
                 : 
                 <p>Loading...</p>}
-
-                {isLoading ? "Loading..." : ""}
                 {aiAnalysisEnabled && aiAnalysis ? 
                     <div className="ai-panel">
                         <h1>Analysis</h1>

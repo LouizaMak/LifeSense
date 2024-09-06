@@ -12,8 +12,6 @@ function Profile() {
     const [isSetting, setIsSetting] = useState(false)
     const { aiAnalysisEnabled, setAiAnalysisEnabled } = useContext(AIContext)
 
-    console.log(aiAnalysisEnabled)
-
     function handleToggleForm(e) {
       setIsEditing(!isEditing)
     }
@@ -71,6 +69,7 @@ function Profile() {
                     <h2>Joined: {currentUser.date_joined.slice(0,10)}</h2>
                     <p>Age: {currentUser.age}</p>
                     <p>Gender: {currentUser.gender}</p>
+                    <p>Birthday: {currentUser.birthday}</p>
                     <button onClick={handleSettingToggle}>Settings</button>
                 </div>
             </div>

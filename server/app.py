@@ -33,6 +33,7 @@ class Signup(Resource):
             email=data['email'],
             first_name = data['first_name'],
             last_name = data['last_name'],
+            birthday = data['birthday'],
             age = data['age'],
             gender = data['gender'],
             date_joined = datetime.fromisoformat(data['date_joined'].replace("Z", "+00:00")).date()

@@ -23,7 +23,8 @@ export const signupSchema = yup.object().shape({
     .max(50, "Too Long!")
     .required("First name is required."),
     gender: yup.string().required("Gender selection is required."),
-    age: yup.number().required("Age is required.").positive().integer()
+    age: yup.number().required("Age is required.").positive().integer(),
+    birthday: yup.string().required('Birthday is required.')
 })
 
 export const editProfileSchema = yup.object().shape({
