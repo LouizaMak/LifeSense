@@ -169,17 +169,43 @@
     font-size: 20px;
 }
 
-.panel-1 {
+.panel-container{
     display: flex;
-    width: 50%;
-    margin: 100px 0px 50px 175px;
+    flex-direction: column;
     align-items: center;
+    gap: 50px;
 }
 
-.welcome-text h1 {
+.panel-1 {
+    display: flex;
+    align-items: center;
+    margin: 30px 300px 0px 0px;
+}
+
+.welcome-text {
+    width: 500px;
+    margin-right: -50px;
+}
+
+.panel-2 {
+    display: flex;
+    align-items: center;
+    margin: 0px 0px 15px 300px;
+}
+
+.ai-text {
+    width: 500px;
+    margin-left: -80px;
+}
+
+.welcome-text h1, .ai-text h1 {
     color: #0097B2;
 }
 
-.woman-smiling-image {
+.woman-smiling-image, .data-image {
     clip-path: circle();
+}
+
+.data-image img{
+    height: 350px
 }
