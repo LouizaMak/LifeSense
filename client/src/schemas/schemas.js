@@ -39,3 +39,7 @@ export const editProfileSchema = yup.object().shape({
     gender: yup.string().required("Gender selection is required."),
     age: yup.number().required("Age is required.").positive().integer()
 })
+
+export const dataPointSchema = yup.object().shape({
+    bgl: yup.number().required()
+})

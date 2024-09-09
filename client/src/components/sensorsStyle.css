@@ -21,7 +21,7 @@
 }
 
 /* Flex-box refactor */
-.empty-sensors, .device-panel, .sensors-container, .graph-ai-block, .graph-panel  {
+.empty-sensors, .device-panel, .sensors-container, .graph-ai-block, .graph-panel, .add-popup  {
     display: flex;
     flex-direction: column;
 }
@@ -126,4 +126,16 @@
     border-radius: 100px;
     border-width: 0px;
     margin-bottom: 20px;
+}
+
+.add-popup {
+    align-items: center;
+    box-shadow: 0 5px 34px rgba(0,0,0,.4);
+    border-radius: 10px;
+    position: absolute;
+    width: 40%;
+    top: 25%;
+    left: 30%;
+    justify-content: center;
+    background-color: #ffde59c7;
 }

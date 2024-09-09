@@ -10,8 +10,9 @@ from openai import OpenAI
 
 # Local imports
 from config import app, db, api
-from models import Sensor, Status, User
+from models import Sensor, Status, User, DataPoint
 from datetime import datetime
+from dateutil import parser
 
 client = OpenAI()
 
@@ -157,6 +158,20 @@ class OpenAIAPI(Resource):
         res_dict = json.loads(res_str)
         return jsonify(res_dict)
     
+class DataPointIndex(Resource):
+    def post(self):
+        data = request.get_json()
+        date_time_obj = parser.parse(data.get("date_time"))
+        new_data_point = DataPoint(
+            date_time = date_time_obj, 
+            bgl = data.get("bgl"),
+            sensor_id = data.get("sensor_id"),
+            status_id = data.get("status_id")
+        )
+        db.session.add(new_data_point)
+        db.session.commit()
+        return new_data_point.to_dict(), 201
+    
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
@@ -166,6 +181,7 @@ api.add_resource(SensorIndex, '/sensors', endpoint='sensors')
 api.add_resource(SensorDetails, '/sensors/<id>', endpoint='sensor_details')
 api.add_resource(StatusIndex, '/statuses', endpoint='statuses')
 api.add_resource(OpenAIAPI, '/ai_analyze', endpoint='ai_analyze')
+api.add_resource(DataPointIndex, '/data_points', endpoint='data_points')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
