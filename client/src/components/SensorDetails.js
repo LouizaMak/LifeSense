@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { LineChart, Line, YAxis, XAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { LineChart, Line, YAxis, XAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 import { AIContext } from "./AIProvider";
 import AddDataPointForm from "./AddDataPointForm";
 
@@ -29,7 +29,8 @@ function SensorDetails() {
     function generateDataArray(dataPoints) {
         const dataArray = dataPoints.map(datapoint => ({
             name: datapoint.date_time.slice(0, 10),
-            BGL: datapoint.bgl
+            BGL: datapoint.bgl,
+            status_id: datapoint.status_id
         }));
         
         dataArray.sort((a, b) => new Date(a.name) - new Date(b.name));
@@ -63,14 +64,73 @@ function SensorDetails() {
         }
     }
 
+    const renderCustomDot = (props) => {
+        const { cx, cy, payload } = props;
+        
+        let dotColor = "";
+        switch (payload.status_id) {
+            case 1:
+                dotColor = "red";
+                break;
+            case 2:
+                dotColor = "green";
+                break;
+            case 3:
+                dotColor = "blue";
+                break;
+            case 4:
+                dotColor = "orange";
+                break;
+            case 5:
+                dotColor = "purple";
+                break;
+            default:
+                dotColor = "gray";
+        }
+    
+        return (
+            <circle cx={cx} cy={cy} r={6} stroke="none" fill={dotColor} />
+        );
+    };
+
+    const statusColorMap = [
+        { id: 1, color: 'red', label: 'Low BGL' },
+        { id: 2, color: 'green', label: 'Excellent BGL' },
+        { id: 3, color: 'blue', label: 'Good BGL' },
+        { id: 4, color: 'orange', label: 'Elevated BGL' },
+        { id: 5, color: 'purple', label: 'Action Suggested BGL' },
+    ];
+
+    const renderCustomLegend = () => {
+        return (
+            <ul style={{ listStyle: 'none', display: 'flex', padding: 0 }}>
+                {statusColorMap.map((status) => (
+                    <li key={status.id} style={{ marginRight: 20, display: 'flex', alignItems: 'center' }}>
+                        <div
+                            style={{
+                                width: 12,
+                                height: 12,
+                                backgroundColor: status.color,
+                                marginRight: 6,
+                                borderRadius: '50%'
+                            }}
+                        />
+                        <span>{status.label}</span>
+                    </li>
+                ))}
+            </ul>
+        );
+    };
+
     const renderLineChart = (
         <ResponsiveContainer width="100%" height={350}>
             <LineChart data={bglData}>
-                    <Line type="monotone" dataKey="BGL" stroke="#8884d8"/>
+                    <Line type="monotone" dataKey="BGL" stroke="#8884d8" dot={renderCustomDot}/>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" label={{value: "Date", position: "insideBottom"}} height={50}/>
                     <YAxis tickCount={40} domain={[0,220]} label={{value: "BGL (mg/dL)", angle: -90, position: 'insideLeft'}} width={70}/>
                     <Tooltip />
+                    <Legend content={renderCustomLegend} />
             </LineChart>
         </ResponsiveContainer>
     )
