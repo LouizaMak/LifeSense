@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { LineChart, Line, YAxis, XAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 import { AIContext } from "./AIProvider";
 import AddDataPointForm from "./AddDataPointForm";
+import EditDataPointForm from "./EditDataPointForm";
 
 function SensorDetails() {
     const [sensor, setSensor] = useState("")
@@ -14,6 +15,8 @@ function SensorDetails() {
     const [dataObj, setDataObj] = useState({})
     const { aiAnalysisEnabled, setAiAnalysisEnabled } = useContext(AIContext)
     const [isAdding, setIsAdding] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+    const [editData, setEditData] = useState("")
 
     useEffect(() => {
         fetch(`/sensors/${id}`)
@@ -28,7 +31,8 @@ function SensorDetails() {
 
     function generateDataArray(dataPoints) {
         const dataArray = dataPoints.map(datapoint => ({
-            name: datapoint.date_time.slice(0, 10),
+            id: datapoint.id,
+            name: datapoint.date_time,
             BGL: datapoint.bgl,
             status_id: datapoint.status_id
         }));
@@ -66,30 +70,16 @@ function SensorDetails() {
 
     const renderCustomDot = (props) => {
         const { cx, cy, payload } = props;
-        
-        let dotColor = "";
-        switch (payload.status_id) {
-            case 1:
-                dotColor = "red";
-                break;
-            case 2:
-                dotColor = "green";
-                break;
-            case 3:
-                dotColor = "blue";
-                break;
-            case 4:
-                dotColor = "orange";
-                break;
-            case 5:
-                dotColor = "purple";
-                break;
-            default:
-                dotColor = "gray";
-        }
+        let dotColor = statusColorMap.find(status => status.id === payload.status_id)?.color || 'gray';
     
         return (
-            <circle cx={cx} cy={cy} r={6} stroke="none" fill={dotColor} />
+            <circle 
+            cx={cx} cy={cy} r={8} 
+            stroke="none" 
+            fill={dotColor} 
+            onClick={() => handleDotClick(payload)}
+            style={{cursor: 'pointer', pointerEvents: 'auto'}}
+            />
         );
     };
 
@@ -122,6 +112,18 @@ function SensorDetails() {
         );
     };
 
+    const renderCustomTooltip = ({ active, payload }) => {
+        if (active && payload && payload.length) {
+            const { name, value } = payload[0];
+            return (
+                <div className="custom-tooltip" style={{ pointerEvents: 'none' }}>
+                    <p>{`${name}: ${value}`}</p>
+                </div>
+            );
+        }
+        return null;
+    };
+
     const renderLineChart = (
         <ResponsiveContainer width="100%" height={350}>
             <LineChart data={bglData}>
@@ -129,11 +131,24 @@ function SensorDetails() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" label={{value: "Date", position: "insideBottom"}} height={50}/>
                     <YAxis tickCount={40} domain={[0,220]} label={{value: "BGL (mg/dL)", angle: -90, position: 'insideLeft'}} width={70}/>
-                    <Tooltip />
+                    <Tooltip content={renderCustomTooltip}/>
                     <Legend content={renderCustomLegend} />
             </LineChart>
         </ResponsiveContainer>
     )
+
+    const handleDotClick = (data) => {
+        setIsEditing(!isEditing)
+        setEditData(data)
+    };
+
+    function toggleEditForm(event) {
+        setIsEditing(!isEditing)
+    }
+
+    function toggleAddForm(event) {
+        setIsAdding(!isAdding)
+    }
 
     return(
         <>
@@ -144,8 +159,7 @@ function SensorDetails() {
                         <h1>Sensor Data ({sensor.application_date.slice(0,10)} - {sensor.removal_date.slice(0,10)})</h1>
                         {renderLineChart}
                         <div>
-                            <button onClick={e => setIsAdding(!isAdding)}>Add</button>
-                            <button>Delete</button>
+                            <button onClick={e => setIsAdding(!isAdding)}>Add Data Point</button>
                         </div>
                     </div>
                     : 
@@ -169,7 +183,19 @@ function SensorDetails() {
                     <p>Lowest BGL: {dataObj.lowBGL}</p>
                 </div>
             </div>
-            {isAdding ? <AddDataPointForm sensor={sensor} onDataAdded={() => setDataReady(!dataReady)} /> : ""}
+            {isAdding ? <AddDataPointForm 
+            sensor={sensor} 
+            onDataAdded={() => setDataReady(!dataReady)} 
+            onToggle={toggleAddForm}/> 
+            : ""}
+            {isEditing ? <EditDataPointForm 
+            data={editData} 
+            sensor={sensor} 
+            onDataAdded={() => setDataReady(!dataReady)}
+            onToggle={toggleEditForm}
+            setBglData={setBglData}
+            bglData={bglData}/> 
+            : ""}
         </>
     )
 }

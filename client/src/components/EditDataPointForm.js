@@ -1,14 +1,53 @@
-import React, { useEffect, useState } from "react";
-import style from "./sensorsStyle.css";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateTimeField } from "@mui/x-date-pickers/DateTimeField";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import { useFormik } from "formik";
 import { dataPointSchema } from "../schemas/schemas";
-import dayjs from "dayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { DateTimeField } from '@mui/x-date-pickers/DateTimeField';
+import style from "./sensorsStyle.css";
+import { useEffect } from "react";
 
-function AddDataPointForm({ sensor, onDataAdded, onToggle }) {
+function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBglData }) {
+
+    function handleDeletePoint() {
+        fetch(`/data_points/${data.id}`, {
+            method: "DELETE"
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json()
+                onDataAdded();
+                const updatedBglData = bglData.filter(dataObj => dataObj.id !== data.id)
+                setBglData(updatedBglData)
+            }
+        })
+    }
+
+    const { values, setFieldValue, handleChange, handleSubmit, errors, touched } = useFormik({
+        initialValues: {
+            date_time: data.name,
+            bgl: data.BGL,
+            sensor_id: sensor.id,
+            status_id: ""
+        },
+        validationSchema: dataPointSchema,
+        onSubmit: (values) => {
+            fetch(`/data_points/${data.id}`, {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values, null, 2)
+            })
+            .then(res => {
+                if (res.ok) {
+                    res.json()
+                    onDataAdded();
+                }
+            })
+        }
+    })
 
     function assignStatusId(bgl) {
         if (bgl < 49) {
@@ -24,31 +63,6 @@ function AddDataPointForm({ sensor, onDataAdded, onToggle }) {
         }
     }
 
-    const { values, setFieldValue, handleChange, handleSubmit, errors, touched } = useFormik({
-        initialValues: {
-            date_time: "",
-            bgl: "",
-            sensor_id: sensor.id,
-            status_id: ""
-        },
-        validationSchema: dataPointSchema,
-        onSubmit: (values) => {
-            fetch("/data_points", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(values, null, 2)
-            })
-            .then(res => {
-                if (res.ok) {
-                    res.json()
-                    onDataAdded();
-                }
-            })
-        }
-    })
-    
     useEffect(() => {
         if (values.bgl) {
             const statusId = assignStatusId(values.bgl);
@@ -56,9 +70,9 @@ function AddDataPointForm({ sensor, onDataAdded, onToggle }) {
         }
     }, [values.bgl, setFieldValue]);
 
-    return (
+    return(
         <div className="add-popup">
-            <h2>Add Custom Data Point</h2>
+            <h2>Update Data Point</h2>
             <button onClick={onToggle}>Cancel</button>
             <form className="datapoint-form" onSubmit={handleSubmit}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -72,9 +86,10 @@ function AddDataPointForm({ sensor, onDataAdded, onToggle }) {
 
                 <input type="hidden" name="status_id" value={values.status_id}/>
                 <button className="add-data-button" type="submit">Add Data Point</button>
+                <button onClick={handleDeletePoint}>Delete Data Point</button>
             </form>
         </div>
     )
 }
 
-export default AddDataPointForm;
+export default EditDataPointForm;

@@ -112,33 +112,6 @@ class StatusIndex(Resource):
         statuses_dict = [status.to_dict() for status in Status.query.all()]
         return statuses_dict, 200
     
-    def post(self):
-        data = request.get_json()
-        new_status = Status(
-            severity = data.get("severity"),
-            min = data.get("min"),
-            max = data.get("max")
-        )
-        db.session.add(new_status)
-        db.session.commit()
-        return new_status.to_dict(), 201 
-    
-    def patch(self, id):
-        data = request.get_json()
-        status = Status.query.get(id)
-        for attr in data:
-            setattr(status, attr, data[attr])
-        db.session.add(status)
-        db.session.commit()
-        return status.to_dict()
-    
-    def delete(self, id):
-        status = Status.query.get(id)
-        status_dict = status.to_dict()
-        db.session.delete(status)
-        db.session.commit()
-        return status_dict, 200
-    
 class OpenAIAPI(Resource):
     def post(self):
         data = request.get_json()
@@ -172,6 +145,25 @@ class DataPointIndex(Resource):
         db.session.commit()
         return new_data_point.to_dict(), 201
     
+class DataPointDetails(Resource):
+    def patch(self, id):
+        data = request.get_json()
+        data_point = DataPoint.query.get(id)
+        if 'date_time' in data:
+            data['date_time'] = parser.parse(data['date_time'])
+        for attr in data:
+            setattr(data_point, attr, data[attr])
+        db.session.add(data_point)
+        db.session.commit()
+        return data_point.to_dict()
+    
+    def delete(self, id):
+        data_point = DataPoint.query.get(id)
+        data_point_dict = data_point.to_dict()
+        db.session.delete(data_point)
+        db.session.commit()
+        return data_point_dict, 200
+    
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
@@ -182,6 +174,7 @@ api.add_resource(SensorDetails, '/sensors/<id>', endpoint='sensor_details')
 api.add_resource(StatusIndex, '/statuses', endpoint='statuses')
 api.add_resource(OpenAIAPI, '/ai_analyze', endpoint='ai_analyze')
 api.add_resource(DataPointIndex, '/data_points', endpoint='data_points')
+api.add_resource(DataPointDetails, '/data_points/<id>', endpoint='data_point_details')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
