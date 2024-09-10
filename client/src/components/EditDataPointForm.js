@@ -72,8 +72,10 @@ function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBg
 
     return(
         <div className="add-popup">
-            <h2>Update Data Point</h2>
-            <button onClick={onToggle}>Cancel</button>
+            <div className="popup-header">
+                <h2>Update Data Point</h2>
+                <button onClick={onToggle}>X</button>
+            </div>
             <form className="datapoint-form" onSubmit={handleSubmit}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DateTimeField']}>
@@ -81,12 +83,18 @@ function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBg
                     </DemoContainer>
                 </LocalizationProvider>
 
-                <input type="number" placeholder="BGL" name="bgl" value={values.bgl} onChange={handleChange} className={errors.bgl && touched.bgl ? 'input-error' : null} required />
-                {errors.bgl && touched.bgl && (<span className="error">{errors.bgl}</span>)}
+                <div>
+                    <label for="bgl">BGL:  </label>
+                    <input type="number" placeholder="BGL" name="bgl" value={values.bgl} onChange={handleChange} className={errors.bgl && touched.bgl ? 'input-error' : null} required />
+                    {errors.bgl && touched.bgl && (<span className="error">{errors.bgl}</span>)}
+                </div>
 
                 <input type="hidden" name="status_id" value={values.status_id}/>
-                <button className="add-data-button" type="submit">Add Data Point</button>
-                <button onClick={handleDeletePoint}>Delete Data Point</button>
+
+                <div className="edit-buttons">
+                    <button className="add-data-button" type="submit">Update Data Point</button>
+                    <button className="add-data-button" onClick={handleDeletePoint}>Delete Data Point</button>
+                </div>
             </form>
         </div>
     )

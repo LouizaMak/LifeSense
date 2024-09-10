@@ -16,12 +16,12 @@
 }
 
 /* Font refactor */
-.empty-sensors button, .details-button, .graph-panel button {
+.empty-sensors button, .details-button, .graph-panel button, .add-popup button{
     font-family: "Montserrat", Arial, sans-serif;
 }
 
 /* Flex-box refactor */
-.empty-sensors, .device-panel, .sensors-container, .graph-ai-block, .graph-panel, .add-popup  {
+.empty-sensors, .device-panel, .sensors-container, .graph-ai-block, .graph-panel, .add-popup, .edit-buttons  {
     display: flex;
     flex-direction: column;
 }
@@ -138,4 +138,49 @@
     left: 30%;
     justify-content: center;
     background-color: #ffde59c7;
+}
+
+.add-popup button {
+    height: 30px;
+    width: 150px;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-weight: 500;
+    border-radius: 100px;
+    border-width: 0px;
+    margin-bottom: 10px;
+    background-color: #25BDBE;
+    color: white;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.popup-header h1 {
+    flex-grow: 1;
+    text-align: center; 
+}
+
+.popup-header button {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+}
+
+.datapoint-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px;
+    align-items: center;
+}
+
+.add-data-button {
+    width: 150px;
 }
