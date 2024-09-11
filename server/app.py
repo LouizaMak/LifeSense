@@ -7,6 +7,8 @@ import json
 from flask import request, session, jsonify
 from flask_restful import Resource
 from openai import OpenAI
+from dotenv import load_dotenv
+import os
 
 # Local imports
 from config import app, db, api
@@ -14,6 +16,8 @@ from models import Sensor, Status, User, DataPoint
 from datetime import datetime
 from dateutil import parser
 
+load_dotenv()
+openai_api_key = os.getenv('OPENAI_API_KEY')
 client = OpenAI()
 
 # User Views
