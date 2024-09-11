@@ -1,1 +1,10 @@
 flask
+flask-sqlalchemy==3.0.3
+flask-migrate
+sqlalchemy-serializer
+flask-restful
+flask-cors
+faker
+flask-bcrypt==1.0.1
+openai
+python-dotenv
