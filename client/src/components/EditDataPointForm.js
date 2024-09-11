@@ -20,6 +20,7 @@ function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBg
                 onDataAdded();
                 const updatedBglData = bglData.filter(dataObj => dataObj.id !== data.id)
                 setBglData(updatedBglData)
+                onToggle()
             }
         })
     }

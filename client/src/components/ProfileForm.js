@@ -10,7 +10,7 @@ import dayjs from "dayjs"
 
 function ProfileForm({ onToggleForm }) {
     const { currentUser, setCurrentUser } = useContext(AppContext)
-    const [dateObj, setDateObj] = useState(dayjs(new Date()))
+    const [dateObj, setDateObj] = useState(dayjs(currentUser.birthday))
 
     const maxDate = dayjs()
 
