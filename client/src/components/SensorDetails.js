@@ -23,10 +23,12 @@ function SensorDetails() {
         .then(res => res.json())
         .then(sensor => {
             setSensor(sensor)
-            generateDataArray(sensor.datapoints)
             handleAIData()
             analyzeData()
         })
+        fetch(`/data_points/${id}`)
+        .then(res => res.json())
+        .then(datapoints => generateDataArray(datapoints))
     }, [id, dataReady])
 
     function generateDataArray(dataPoints) {

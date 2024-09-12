@@ -73,7 +73,6 @@ class Profile(Resource):
         db.session.commit()
         return user.to_dict(), 200
     
-    
 # Sensor Views
 class SensorIndex(Resource):
     def get(self):
@@ -116,6 +115,7 @@ class StatusIndex(Resource):
         statuses_dict = [status.to_dict() for status in Status.query.all()]
         return statuses_dict, 200
     
+# OpenAI API View
 class OpenAIAPI(Resource):
     def post(self):
         data = request.get_json()
@@ -134,8 +134,9 @@ class OpenAIAPI(Resource):
         res_str = completion.choices[0].message.content
         res_dict = json.loads(res_str)
         return jsonify(res_dict)
-    
-class DataPointIndex(Resource):
+
+# DataPoint Views 
+class DataPointPost(Resource):
     def post(self):
         data = request.get_json()
         date_time_obj = parser.parse(data.get("date_time"))
@@ -150,6 +151,10 @@ class DataPointIndex(Resource):
         return new_data_point.to_dict(), 201
     
 class DataPointDetails(Resource):
+    def get(self, id):
+        datapoints_dict = [datapoint.to_dict() for datapoint in DataPoint.query.filter(DataPoint.sensor_id == id).all()]
+        return datapoints_dict, 200
+
     def patch(self, id):
         data = request.get_json()
         data_point = DataPoint.query.get(id)
@@ -177,8 +182,8 @@ api.add_resource(SensorIndex, '/sensors', endpoint='sensors')
 api.add_resource(SensorDetails, '/sensors/<id>', endpoint='sensor_details')
 api.add_resource(StatusIndex, '/statuses', endpoint='statuses')
 api.add_resource(OpenAIAPI, '/ai_analyze', endpoint='ai_analyze')
-api.add_resource(DataPointIndex, '/data_points', endpoint='data_points')
+api.add_resource(DataPointPost, '/data_points', endpoint='data_points')
 api.add_resource(DataPointDetails, '/data_points/<id>', endpoint='data_point_details')
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(host="0.0.0.0", port=5555, debug=True)
