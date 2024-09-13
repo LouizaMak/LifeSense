@@ -4,3 +4,4 @@
 instance
 .vscode
 package-lock.json
+Dockerfile
