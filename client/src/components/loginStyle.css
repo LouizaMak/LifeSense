@@ -42,6 +42,10 @@
     color: white;
 }
 
+.gender-radio {
+    padding: 20px;
+}
+
 /* Login Container Style */
 .login-container {
     background-color: #25BDBE;

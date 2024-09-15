@@ -21,6 +21,8 @@ function Sensors() {
         })
     }, [])
 
+    console.log(displaySensors)
+
     return (
         <>
             {isEmpty ?

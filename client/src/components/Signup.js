@@ -91,13 +91,13 @@ function Signup() {
                 <div className="gender-radio">
 
                     <input type="radio" id="f" name="gender" value="F" onChange={handleChange} checked={values.gender === 'F'} required/>
-                    <label for="f">Female</label>
+                    <label htmlFor="f">Female</label>
 
                     <input type="radio" id="m" name="gender" value="M" onChange={handleChange} checked={values.gender === 'M'} required/>
-                    <label for="m">Male</label>
+                    <label htmlFor="m">Male</label>
 
                     <input type="radio" id="pnta" name="gender" value="PNTA" onChange={handleChange} required/>
-                    <label for="pnta">Prefer Not To Answer</label>
+                    <label htmlFor="pnta">Prefer Not To Answer</label>
 
                 </div>
 
