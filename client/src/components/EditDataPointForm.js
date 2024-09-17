@@ -8,7 +8,7 @@ import { dataPointSchema } from "../schemas/schemas";
 import style from "./sensorsStyle.css";
 import { useEffect } from "react";
 
-function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBglData }) {
+function EditDataPointForm({ data, sensor, onToggle, bglData, setBglData }) {
 
     function handleDeletePoint() {
         fetch(`${process.env.REACT_APP_API_URL}/data_points/${data.id}`, {
@@ -17,7 +17,6 @@ function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBg
         .then(res => {
             if (res.ok) {
                 res.json()
-                onDataAdded();
                 const updatedBglData = bglData.filter(dataObj => dataObj.id !== data.id)
                 setBglData(updatedBglData)
                 onToggle()
@@ -28,7 +27,7 @@ function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBg
     const { values, setFieldValue, handleChange, handleSubmit, errors, touched } = useFormik({
         initialValues: {
             date_time: data.name,
-            bgl: data.BGL,
+            bgl: data.bgl,
             sensor_id: sensor.id,
             status_id: ""
         },
@@ -43,10 +42,15 @@ function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBg
             })
             .then(res => {
                 if (res.ok) {
-                    res.json()
-                    onDataAdded();
+                    res.json().then(data => {
+                        const updatedBglData = bglData.map(dataObj => dataObj.id === data.id
+                            ? {...dataObj, bgl: data.bgl, date_time: data.date_time}
+                            : dataObj
+                        )
+                        setBglData(updatedBglData)
+                    })
                 }
-            })
+            })  
         }
     })
 

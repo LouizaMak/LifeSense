@@ -8,10 +8,9 @@ import EditDataPointForm from "./EditDataPointForm";
 function SensorDetails() {
     const [sensor, setSensor] = useState("")
     const { id } = useParams()
-    const [bglData, setBglData] = useState([])
     const [aiAnalysis, setAiAnalysis] = useState({})
+    const [bglData, setBglData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
-    const [dataReady, setDataReady] = useState(false)
     const [dataObj, setDataObj] = useState({})
     const { aiAnalysisEnabled, setAiAnalysisEnabled } = useContext(AIContext)
     const [isAdding, setIsAdding] = useState(false)
@@ -19,30 +18,38 @@ function SensorDetails() {
     const [editData, setEditData] = useState("")
 
     useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URL}/data_points/${id}`)
+        .then(res => res.json())
+        .then(datapoints => {
+            generateDataArray(datapoints)
+        })
         fetch(`${process.env.REACT_APP_API_URL}/sensors/${id}`)
         .then(res => res.json())
         .then(sensor => {
             setSensor(sensor)
             handleAIData()
-            analyzeData()
         })
-        fetch(`${process.env.REACT_APP_API_URL}/data_points/${id}`)
-        .then(res => res.json())
-        .then(datapoints => generateDataArray(datapoints))
-    }, [id, dataReady])
+    }, [id])
 
     function generateDataArray(dataPoints) {
         const dataArray = dataPoints.map(datapoint => ({
             id: datapoint.id,
             name: datapoint.date_time,
-            BGL: datapoint.bgl,
+            bgl: datapoint.bgl,
             status_id: datapoint.status_id
         }));
         
         dataArray.sort((a, b) => new Date(a.name) - new Date(b.name));
-    
         setBglData(dataArray);
     }
+
+    useEffect(() => {
+        const bglRawData = bglData.map(dataObj => dataObj.bgl).sort((a, b) => a - b)
+        if (bglRawData.length > 0) {
+            const averageBGL = Math.round(bglRawData.reduce((a, b) => a + b)/bglRawData.length)
+            setDataObj({averageBGL: averageBGL, highBGL: bglRawData.pop(), lowBGL: bglRawData.shift()})
+        }
+    }, [bglData])
 
     function handleAIData() {
         setIsLoading(true)
@@ -58,16 +65,6 @@ function SensorDetails() {
             setAiAnalysis(data)
             setIsLoading(false)
         })
-    }
-
-    function analyzeData() {
-        const bglRawData = bglData.map(dataObj => dataObj.BGL).sort((a, b) => a - b)
-        if (bglRawData.length > 0) {
-            const averageBGL = Math.round(bglRawData.reduce((a, b) => a + b)/bglRawData.length)
-            setDataObj({averageBGL: averageBGL, highBGL: bglRawData.pop(), lowBGL: bglRawData.shift()})
-        } else {
-            setDataReady(!dataReady)
-        }
     }
 
     const renderCustomDot = (props) => {
@@ -129,7 +126,7 @@ function SensorDetails() {
     const renderLineChart = (
         <ResponsiveContainer width="100%" height={350}>
             <LineChart data={bglData}>
-                    <Line type="monotone" dataKey="BGL" stroke="#8884d8" dot={renderCustomDot}/>
+                    <Line type="monotone" dataKey="bgl" stroke="#8884d8" dot={renderCustomDot}/>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" label={{value: "Date", position: "insideBottom"}} height={50}/>
                     <YAxis tickCount={40} domain={[0,220]} label={{value: "BGL (mg/dL)", angle: -90, position: 'insideLeft'}} width={70}/>
@@ -187,13 +184,13 @@ function SensorDetails() {
             </div>
             {isAdding ? <AddDataPointForm 
             sensor={sensor} 
-            onDataAdded={() => setDataReady(!dataReady)} 
-            onToggle={toggleAddForm}/> 
+            onToggle={toggleAddForm}
+            setBglData={setBglData}
+            bglData={bglData}/> 
             : ""}
             {isEditing ? <EditDataPointForm 
             data={editData} 
             sensor={sensor} 
-            onDataAdded={() => setDataReady(!dataReady)}
             onToggle={toggleEditForm}
             setBglData={setBglData}
             bglData={bglData}/> 

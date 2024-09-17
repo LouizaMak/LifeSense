@@ -8,7 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { DateTimeField } from '@mui/x-date-pickers/DateTimeField';
 
-function AddDataPointForm({ sensor, onDataAdded, onToggle }) {
+function AddDataPointForm({ sensor, bglData, setBglData, onToggle }) {
 
     function assignStatusId(bgl) {
         if (bgl < 49) {
@@ -42,8 +42,11 @@ function AddDataPointForm({ sensor, onDataAdded, onToggle }) {
             })
             .then(res => {
                 if (res.ok) {
-                    res.json()
-                    onDataAdded();
+                    res.json().then(data => {
+                        const updatedBglData = [...bglData, data]
+                        updatedBglData.sort((a, b) => new Date(a.name) - new Date(b.name))
+                        setBglData(updatedBglData)
+                    })
                 }
             })
         }
