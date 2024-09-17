@@ -31,8 +31,10 @@ function ProfileForm({ onToggleForm }) {
         onSubmit: (values) => {
             fetch(`${process.env.REACT_APP_API_URL}/profile`, {
                 method: "PATCH",
+                credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': sessionStorage.getItem('user_id')
                 },
                 body: JSON.stringify(values, null, 2)
             })

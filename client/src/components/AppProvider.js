@@ -7,7 +7,6 @@ function AppProvider({ children }) {
 
   useEffect(() => {
     const storedUserId = sessionStorage.getItem('user_id');
-    console.log(storedUserId)
 
     if(storedUserId) {
       fetch(`${process.env.REACT_APP_API_URL}/check_session`, {

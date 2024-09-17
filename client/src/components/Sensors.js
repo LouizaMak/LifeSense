@@ -9,7 +9,14 @@ function Sensors() {
     const [isEmpty, setIsEmpty] = useState(false)
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/sensors`)
+        fetch(`${process.env.REACT_APP_API_URL}/sensors`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('user_id')
+            }
+        })
         .then(res => res.json())
         .then(sensors => {
             setIsLoading("")
@@ -20,8 +27,6 @@ function Sensors() {
             }
         })
     }, [])
-
-    console.log(displaySensors)
 
     return (
         <>

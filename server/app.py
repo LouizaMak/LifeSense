@@ -101,7 +101,7 @@ class Logout(Resource):
 class Profile(Resource):
     def patch(self):
         data = request.get_json()
-        user = User.query.filter(User.id == session.get("user_id")).first()
+        user = User.query.filter(User.id == request.headers.get("Authorization")).first()
         for attr in data:
             setattr(user, attr, data[attr])
         db.session.add(user)
@@ -111,7 +111,7 @@ class Profile(Resource):
 # Sensor Views
 class SensorIndex(Resource):
     def get(self):
-        sensors_dict = [sensor.to_dict() for sensor in Sensor.query.filter(Sensor.user_id == session.get("user_id")).all()]
+        sensors_dict = [sensor.to_dict() for sensor in Sensor.query.filter(Sensor.user_id == request.headers.get("Authorization")).all()]
         return sensors_dict, 200
     
     def post(self):
@@ -122,7 +122,7 @@ class SensorIndex(Resource):
             application_date = data.get("application_date"),
             removal_date = data.get("removal_date"),
             serial = data.get("serial"),
-            user_id = session.get("user_id")
+            user_id = request.headers.get("Authorization")
         )
         db.session.add(new_sensor)
         db.session.commit()
