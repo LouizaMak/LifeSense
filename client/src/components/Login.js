@@ -17,7 +17,7 @@ function Login() {
         },
         validationSchema: loginSchema,
         onSubmit: (values) => {
-            fetch("/login", {
+            fetch(`${process.env.REACT_APP_API_URL}/login`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,8 +27,10 @@ function Login() {
             .then(res => {
                 if (res.ok) {
                     res.json()
-                    .then(user => {
+                    .then(res => {
+                        const user = res['user']
                         setCurrentUser(user);
+                        sessionStorage.setItem('user_id', user.id)
                         navigate(`/profile`)
                     })
                 } else {

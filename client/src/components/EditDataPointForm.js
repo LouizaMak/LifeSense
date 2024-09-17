@@ -11,7 +11,7 @@ import { useEffect } from "react";
 function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBglData }) {
 
     function handleDeletePoint() {
-        fetch(`/data_points/${data.id}`, {
+        fetch(`${process.env.REACT_APP_API_URL}/data_points/${data.id}`, {
             method: "DELETE"
         })
         .then(res => {
@@ -34,7 +34,7 @@ function EditDataPointForm({ data, onDataAdded, sensor, onToggle, bglData, setBg
         },
         validationSchema: dataPointSchema,
         onSubmit: (values) => {
-            fetch(`/data_points/${data.id}`, {
+            fetch(`${process.env.REACT_APP_API_URL}/data_points/${data.id}`, {
                 method: "PATCH",
                 headers: {
                     'Content-Type': 'application/json'

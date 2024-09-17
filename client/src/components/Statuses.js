@@ -7,7 +7,7 @@ function Statuses() {
     const [statuses, setStatuses] = useState([])
 
     useEffect(() => {
-        fetch("/statuses")
+        fetch(`${process.env.REACT_APP_API_URL}/statuses`)
         .then(res => res.json())
         .then(statuses => setStatuses(statuses))
     }, [])

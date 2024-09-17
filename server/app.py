@@ -4,7 +4,7 @@
 
 # Remote library imports
 import json
-from flask import request, session, jsonify
+from flask import request, session, jsonify, make_response
 from flask_restful import Resource
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -20,13 +20,23 @@ load_dotenv()
 openai_api_key = os.getenv('OPENAI_API_KEY')
 client = OpenAI()
 
+@app.before_request
+def log_request():
+    app.logger.debug(f"Incoming request: {request.method} {request.path}")
+
 # User Views
 class CheckSession(Resource):
     def get(self):
-        user_id = session.get("user_id")
+        user_id = request.headers.get("Authorization")
+        app.logger.debug(f"Request: {request.headers}")
+        if not user_id:
+            return {f"message": "User is not logged in"}, 400
+        try:
+            user_id = int(user_id)
+        except ValueError:
+            return {"message": "Invalid user ID"}, 400
         user = User.query.filter(user_id == User.id).first()
-        if not user:
-            return {}, 204
+        if not user: {"message": "User not found"}, 204
         else:
             return user.to_dict(), 200
 
@@ -34,8 +44,8 @@ class Signup(Resource):
     def post(self):
         data = request.get_json()
         user = User(
-            username=data['username'],
-            email=data['email'],
+            username = data['username'],
+            email = data['email'],
             first_name = data['first_name'],
             last_name = data['last_name'],
             birthday = data['birthday'],
@@ -46,16 +56,41 @@ class Signup(Resource):
         user.password_hash = data['password']
         db.session.add(user)
         db.session.commit()
-        return user.to_dict(), 201
 
+        secureUser = {
+            'id': user.id,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'age': user.age,
+            'birthday': user.birthday,
+            'gender': user.gender,
+            'date_joined': data['date_joined']
+        }
+
+        return make_response(jsonify({
+            "message": "User created",
+            "user": secureUser
+            }), 201)
+    
 class Login(Resource):
     def post(self):
         username = request.get_json()['username']
         password = request.get_json()['password']
         user = User.query.filter(User.username == username).first()
         if user.authenticate(password):
-            session["user_id"] = user.id
-            return user.to_dict(), 200
+            secureUser = {
+            'id': user.id,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'age': user.age,
+            'birthday': user.birthday,
+            'gender': user.gender,
+            'date_joined': user.date_joined
+        }
+            return make_response(jsonify({
+                "message": "User logged in", 
+                "user": secureUser
+                }), 200)
         else:
             return {"message": "Invalid username and password."}, 404
         

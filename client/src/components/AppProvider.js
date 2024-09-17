@@ -6,12 +6,25 @@ function AppProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null)
 
   useEffect(() => {
-    fetch("/check_session")
-    .then(res => {
-      if (res.status === 200) {
-        res.json().then(user => setCurrentUser(user))
-      }
-    })
+    const storedUserId = sessionStorage.getItem('user_id');
+    console.log(storedUserId)
+
+    if(storedUserId) {
+      fetch(`${process.env.REACT_APP_API_URL}/check_session`, {
+        method: 'GET',
+        credentails: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': storedUserId,
+        }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          res.json().then(user => setCurrentUser(user))
+        }
+      })
+    }
+    
 }, [])
 
     return (

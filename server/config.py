@@ -17,14 +17,6 @@ import os
 app = Flask(__name__)
 app.secret_key = os.getenv('APP_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config.update(
-    SESSION_COOKIE_NAME='myapp_session',
-    SESSION_COOKIE_SECURE=True,
-    SESSION_COOKIE_HTTPONLY=True,
-    SESSION_COOKIE_SAMESITE='Lax',
-    SESSION_COOKIE_PATH='/',
-    SESSION_COOKIE_DOMAIN='98.81.198.126'  # Replace with your domain
-)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
@@ -42,4 +34,4 @@ api = Api(app)
 bcrypt = Bcrypt(app)
 
 # Instantiate CORS
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://lifesense-client.s3-website-us-east-1.amazonaws.com"}}, expose_headers=["User_id"], supports_credentials=True)

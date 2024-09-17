@@ -8,11 +8,12 @@ function NavBar() {
     const navigate = useNavigate();
 
     function handleLogoutClick() {
-        fetch("/logout", {
+        fetch(`${process.env.REACT_APP_API_URL}/logout`, {
             method: "DELETE" 
         })
         .then(res => {
           if (res.ok) {
+            sessionStorage.removeItem('user_id')
             setCurrentUser(null);
             navigate(`/login`)
           }

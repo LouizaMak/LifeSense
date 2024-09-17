@@ -9,7 +9,7 @@ function Sensors() {
     const [isEmpty, setIsEmpty] = useState(false)
 
     useEffect(() => {
-        fetch("/sensors")
+        fetch(`${process.env.REACT_APP_API_URL}/sensors`)
         .then(res => res.json())
         .then(sensors => {
             setIsLoading("")

@@ -29,7 +29,7 @@ function ProfileForm({ onToggleForm }) {
         },
         validationSchema: editProfileSchema,
         onSubmit: (values) => {
-            fetch(`/profile`, {
+            fetch(`${process.env.REACT_APP_API_URL}/profile`, {
                 method: "PATCH",
                 headers: {
                     'Content-Type': 'application/json'

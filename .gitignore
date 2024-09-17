@@ -10,3 +10,6 @@ package-lock.json
 
 #faker
 node_modules
+
+#build folder
+build

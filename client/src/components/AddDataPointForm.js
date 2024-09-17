@@ -33,7 +33,7 @@ function AddDataPointForm({ sensor, onDataAdded, onToggle }) {
         },
         validationSchema: dataPointSchema,
         onSubmit: (values) => {
-            fetch("/data_points", {
+            fetch(`${process.env.REACT_APP_API_URL}/data_points`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

@@ -19,14 +19,14 @@ function SensorDetails() {
     const [editData, setEditData] = useState("")
 
     useEffect(() => {
-        fetch(`/sensors/${id}`)
+        fetch(`${process.env.REACT_APP_API_URL}/sensors/${id}`)
         .then(res => res.json())
         .then(sensor => {
             setSensor(sensor)
             handleAIData()
             analyzeData()
         })
-        fetch(`/data_points/${id}`)
+        fetch(`${process.env.REACT_APP_API_URL}/data_points/${id}`)
         .then(res => res.json())
         .then(datapoints => generateDataArray(datapoints))
     }, [id, dataReady])
@@ -46,7 +46,7 @@ function SensorDetails() {
 
     function handleAIData() {
         setIsLoading(true)
-        fetch(`/ai_analyze`, {
+        fetch(`${process.env.REACT_APP_API_URL}/ai_analyze`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

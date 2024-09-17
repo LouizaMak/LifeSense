@@ -9,6 +9,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
 import style from "./signupStyle.css";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import Cookies from 'js-cookie';
 
 function Signup() {
     const { setCurrentUser } = useContext(AppContext)
@@ -36,7 +37,7 @@ function Signup() {
         },
         validationSchema: signupSchema,
         onSubmit: (values) => {
-            fetch("/signup", {
+            fetch(`${process.env.REACT_APP_API_URL}/signup`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -46,8 +47,10 @@ function Signup() {
             .then(res => {
                 if (res.ok) {
                     res.json()
-                    .then(user => {
+                    .then(res => {
+                        const user = res['user']
                         setCurrentUser(user);
+                        sessionStorage.setItem('user_id', user.id)
                         navigate(`/profile`)
                     })
                 }
