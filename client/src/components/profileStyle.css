@@ -142,4 +142,9 @@
 
 .birthday-container p {
     margin-bottom: -10px;
+    margin-top: -10px;
+}
+
+.birthday-container {
+    margin-bottom: 15px;
 }
